@@ -1,1 +1,1 @@
-# OOP
+# OOP (Programare Orientata pe Obiecte)
