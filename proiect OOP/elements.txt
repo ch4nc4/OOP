@@ -118,7 +118,6 @@ Ice:Water+Glass
 Idea:LightBulb+Man
 Iodine:Algae+Fire
 Juice:Fruit+Pressure
-Kamasutra:Book+Sex
 Kangarroo:Frog+1up
 Kerogen:Fossil+Pressure
 Knife:Meat+Tool

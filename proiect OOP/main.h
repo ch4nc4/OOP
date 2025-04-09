@@ -21,14 +21,16 @@ class AlchemyTable{
             bool getType() const;
     
             void setType(bool newType);
+
+            Element* operator+(Element *other);
     
     };
-    vector<Element*> elements;
-    static const map<pair<Element*, Element*>, Element*> recipes;
+    static vector<Element*> elements;
+    static map<pair<Element*, Element*>, Element*> recipes;
     public:
-        AlchemyTable(vector<Element*> elements, map<pair<Element*, Element*>, Element*> recipes){
+        AlchemyTable(vector<Element*> elements, map<pair<Element*, Element*>, Element*> recipes);
 
-        }
+        static void initGame(const char* fileName);
     
 };
 

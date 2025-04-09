@@ -7,9 +7,10 @@
 - clasa Recipe nu mai exista *
 - adaug map care link-uieste un pair de elemente la rezultatul celor doua *
 - adaug header unde descriu functiile *
-- fisier de configurare
-- override operator + intre 2 elemente
-- functie de initializare a jocului (procesez datele din fisierul de configurare)
+- fisier de configurare *
+- override operator + intre 2 elemente * (add "throw error")
+- functie de initializare a jocului (procesez datele din fisierul de configurare) -> functie statica
+- bool ca sa verif daca AlchemyTable a fost init. -> if not => eroare
 
 */
 
@@ -17,8 +18,11 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<fstream>
+#include<map>
 using namespace std;
 
+ifstream elemFile("elements.txt");
 
 AlchemyTable::Element::Element(string name) {
     endElement = true;
@@ -45,10 +49,24 @@ void AlchemyTable::Element::setType(bool newType){
     endElement = newType;
 }
 
+AlchemyTable::Element* AlchemyTable::Element::operator+(Element *other){
+    if(recipes.contains({this, other})){
+        return recipes[{this, other}];
+    }
+
+    else{
+        //throw error;
+    }
+   
+}
+
 AlchemyTable::AlchemyTable(vector<Element*> elements, map<pair<Element*, Element*>, Element*> recipes){
 
 }
 
+void AlchemyTable::initGame(const char* fileName){
+    
+}
 
 int main()
 {
