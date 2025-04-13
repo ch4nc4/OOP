@@ -8,10 +8,10 @@
 - adaug map care link-uieste un pair de elemente la rezultatul celor doua *
 - adaug header unde descriu functiile *
 - fisier de configurare *
-- override operator + intre 2 elemente * (add "throw error")
-- functie de initializare a jocului (procesez datele din fisierul de configurare) -> functie statica
-- static!! bool ca sa verif daca AlchemyTable a fost init. -> if not => eroare
-- supraincarcare operator citire elemente
+- override operator + intre 2 elemente * (add "throw error") *
+- functie de initializare a jocului (procesez datele din fisierul de configurare) -> functie statica *
+- static!! bool ca sa verif daca AlchemyTable a fost init. -> if not => eroare *
+- supraincarcare operator citire elemente *
 - fisier config elemente *
 - functie in care decid daca elementul este endElement sau nu
 
@@ -89,13 +89,27 @@ void AlchemyTable::Element::setType(bool newType){
     endElement = newType;
 }
 
+AlchemyTable::Element AlchemyTable::Element::verifEndElem(){
+    map<pair<Element, Element>, Element>::iterator it;
+    bool foundRecipe = false;
+    for(it = recipes.begin(); it != recipes.end(); it++){
+        if(it->first.first.getName() == this->getName())
+            foundRecipe = true;
+    }
+
+    if(!foundRecipe)
+        this->endElement = true;
+    
+    return *this;
+}
+
 AlchemyTable::Element AlchemyTable::Element::operator+(const Element &other)const{
     if(recipes.contains({*this, other})){
         return recipes[{*this, other}];
     }
 
     else{
-        //throw error;
+        throw out_of_range("These elements have no recipe asociated!!");
     }
 }
 
@@ -129,6 +143,13 @@ void AlchemyTable::initGame(const char* fileName){
     }
 
     initTable = true;
+}
+
+bool AlchemyTable::verifInitGame(){
+    if(initTable)
+        return true;
+    else
+        throw logic_error("When an AlchemyTable object is declared it should also be initiated!!");
 }
 
 // --- sfarsit functii membre AlchemyTable ---

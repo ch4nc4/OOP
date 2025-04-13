@@ -27,6 +27,8 @@ class AlchemyTable{
         
                 void setType(bool newType);
 
+                Element verifEndElem();
+
                 Element operator+(const Element &other)const;
 
                 friend std::istream& operator>>(std::istream& in, Element &other);
@@ -40,6 +42,8 @@ class AlchemyTable{
         AlchemyTable(vector<Element> elements, map<pair<Element, Element>, Element> recipes, bool initTable = false);
 
         static void initGame(const char* fileName);
+
+        static bool verifInitGame();
     
 };
 
