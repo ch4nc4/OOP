@@ -22,13 +22,13 @@ class AlchemyTable{
     
             void setType(bool newType);
 
-            Element* operator+(Element *other);
+            Element operator+(const Element &other)const;
     
     };
-    static vector<Element*> elements;
-    static map<pair<Element*, Element*>, Element*> recipes;
+    static map<string,Element> elements;
+    static map<pair<Element, Element>, Element> recipes;
     public:
-        AlchemyTable(vector<Element*> elements, map<pair<Element*, Element*>, Element*> recipes);
+        AlchemyTable(vector<Element> elements, map<pair<Element, Element>, Element> recipes);
 
         static void initGame(const char* fileName);
     

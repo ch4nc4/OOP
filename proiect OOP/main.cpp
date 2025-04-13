@@ -10,7 +10,9 @@
 - fisier de configurare *
 - override operator + intre 2 elemente * (add "throw error")
 - functie de initializare a jocului (procesez datele din fisierul de configurare) -> functie statica
-- bool ca sa verif daca AlchemyTable a fost init. -> if not => eroare
+- static!! bool ca sa verif daca AlchemyTable a fost init. -> if not => eroare
+- supraincarcare operator citire elemente
+- fisier config elemente
 
 */
 
@@ -22,7 +24,7 @@
 #include<map>
 using namespace std;
 
-ifstream elemFile("elements.txt");
+ifstream recipeFile("recipes.txt");
 
 AlchemyTable::Element::Element(string name) {
     endElement = true;
@@ -49,9 +51,9 @@ void AlchemyTable::Element::setType(bool newType){
     endElement = newType;
 }
 
-AlchemyTable::Element* AlchemyTable::Element::operator+(Element *other){
-    if(recipes.contains({this, other})){
-        return recipes[{this, other}];
+AlchemyTable::Element AlchemyTable::Element::operator+(const Element &other)const{
+    if(recipes.contains({*this, other})){
+        return recipes[{*this, other}];
     }
 
     else{
@@ -60,7 +62,7 @@ AlchemyTable::Element* AlchemyTable::Element::operator+(Element *other){
    
 }
 
-AlchemyTable::AlchemyTable(vector<Element*> elements, map<pair<Element*, Element*>, Element*> recipes){
+AlchemyTable::AlchemyTable(vector<Element> elements, map<pair<Element, Element>, Element> recipes){
 
 }
 
