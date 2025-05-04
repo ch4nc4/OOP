@@ -2,6 +2,8 @@
 
 //Adaugari:
 /* 
+destructori, fct virtuale, clasa abstracta, casting (cast la elementul nested pt displayable elem), template :( <_> ;_; (paleta de culori, theme-uri(const) -> light/dark mode) 
+design patern
 - class Element se afla in AlchemyTable *
 - adaug in Element static vector<*Element> *
 - clasa Recipe nu mai exista *
@@ -14,6 +16,14 @@
 - supraincarcare operator citire elemente *
 - fisier config elemente *
 - functie in care decid daca elementul este endElement sau nu *
+- clasa window (mosteneste alchemytable)?? care are vectorul currentElem -> pair<Element, int> -> retine ce elemente si ce grad de multiplicare au la mom respectiv
+- ar fi nevoie si de o alta pagina in joc, unde sa fie display-uite toate elementele gasite
+- pe pagina de display a elementelor, pot fi selectate si adaugate la current gameplay
+- clasa de elemente -> mostenire (clasa de baza (abstracta) - functii virtuale)
+- display-able element -> elem is poz lui pe tabla
+- set cu ce elem am gas pana acum
+- fiecare window are clasa lui: start menu window, game window, show elements window (singletoane)
+- clasa game - initializez jocul -> mosteneste alchemytable + retin instanta in care ma aflu (gameState), handle events
 
 */
 
@@ -116,7 +126,7 @@ AlchemyTable::Element AlchemyTable::Element::operator+(const Element &other)cons
     }
 
     else{
-        throw out_of_range("These elements have no recipe asociated!!");
+        throw invalid_argument("These elements have no recipe asociated!!");
     }
 }
 
@@ -125,8 +135,13 @@ AlchemyTable::Element AlchemyTable::Element::operator+(const Element &other)cons
 
 // ---functii membre AlchemyTable ---
 
-AlchemyTable::AlchemyTable(vector<Element> elements, map<pair<Element, Element>, Element> recipes, bool initTable = false){
+AlchemyTable::AlchemyTable(vector<Element> elements, map<pair<Element, Element>, Element> recipes, bool initTable){
 
+}
+
+AlchemyTable& AlchemyTable::getInstance(){
+    static AlchemyTable instance;
+    return instance;
 }
 
 void AlchemyTable::initGame(const char* fileName){
@@ -156,7 +171,7 @@ bool AlchemyTable::verifInitGame(){
     if(initTable)
         return true;
     else
-        throw logic_error("When an AlchemyTable object is declared it should also be initiated!!");
+        throw runtime_error("When an AlchemyTable object is declared it should also be initiated!!");
 }
 
 // --- sfarsit functii membre AlchemyTable ---

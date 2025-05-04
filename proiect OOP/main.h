@@ -7,7 +7,7 @@ using namespace std;
 
 void findRecipe(const string givenString, string &res, string &elem1, string &elem2);
 
-class AlchemyTable{
+class AlchemyTable{ // singleton //
     public:
         class Element{
             string name;
@@ -38,8 +38,18 @@ class AlchemyTable{
         static map<string,Element> elements;
         static map<pair<Element, Element>, Element> recipes;
         static bool initTable;
+
+        // facem constructorul privat pt ca vrem ca un singur obiect de tip AlchemyTable sa fie creat
+        AlchemyTable(vector<Element> elements = {},
+             map<pair<Element, Element>, Element> recipes = {},
+              bool initTable = false);
+
+        // nu trebuie sa avem constructor de copiere sau posibilitatea de assign la AlchemyTable
+        AlchemyTable(const AlchemyTable&) = delete;
+        AlchemyTable& operator=(const AlchemyTable&) = delete;
+
     public:
-        AlchemyTable(vector<Element> elements, map<pair<Element, Element>, Element> recipes, bool initTable = false);
+        static AlchemyTable& getInstance();
 
         static void initGame(const char* fileName);
 
