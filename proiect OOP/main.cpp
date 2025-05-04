@@ -13,7 +13,7 @@
 - static!! bool ca sa verif daca AlchemyTable a fost init. -> if not => eroare *
 - supraincarcare operator citire elemente *
 - fisier config elemente *
-- functie in care decid daca elementul este endElement sau nu
+- functie in care decid daca elementul este endElement sau nu *
 
 */
 
@@ -27,6 +27,13 @@ using namespace std;
 
 ifstream recipeFile("recipes.txt");
 ifstream elemFile("elements.txt");
+
+// --- initializarea elementelor statice ---
+std::map<std::string, AlchemyTable::Element> AlchemyTable::elements;
+std::map<std::pair<AlchemyTable::Element, AlchemyTable::Element>, AlchemyTable::Element> AlchemyTable::recipes;
+bool AlchemyTable::initTable = false;
+
+// -----------------------------------------------
 
 // --- functii non-membre ---
 
