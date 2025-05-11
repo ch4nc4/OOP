@@ -1,0 +1,14 @@
+# Target labels
+ flac-populate
+# Source files and their labels
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/flac-subbuild/CMakeFiles/flac-populate
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/flac-subbuild/CMakeFiles/flac-populate.rule
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/flac-subbuild/CMakeFiles/flac-populate-complete.rule
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/flac-subbuild/flac-populate-prefix/src/flac-populate-stamp/flac-populate-build.rule
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/flac-subbuild/flac-populate-prefix/src/flac-populate-stamp/flac-populate-configure.rule
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/flac-subbuild/flac-populate-prefix/src/flac-populate-stamp/flac-populate-download.rule
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/flac-subbuild/flac-populate-prefix/src/flac-populate-stamp/flac-populate-install.rule
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/flac-subbuild/flac-populate-prefix/src/flac-populate-stamp/flac-populate-mkdir.rule
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/flac-subbuild/flac-populate-prefix/src/flac-populate-stamp/flac-populate-patch.rule
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/flac-subbuild/flac-populate-prefix/src/flac-populate-stamp/flac-populate-test.rule
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/flac-subbuild/flac-populate-prefix/src/flac-populate-stamp/flac-populate-update.rule

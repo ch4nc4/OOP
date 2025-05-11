@@ -1,0 +1,3 @@
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/vorbis-subbuild/CMakeFiles/vorbis-populate.dir
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/vorbis-subbuild/CMakeFiles/edit_cache.dir
+C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/vorbis-subbuild/CMakeFiles/rebuild_cache.dir
