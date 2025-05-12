@@ -1,6 +1,6 @@
 #pragma once
 
-#define SFML_STATIC
+// #define SFML_STATIC
 #include "alchemyTable.h"
 #include "screen.h"
 #include<SFML/Graphics.hpp>
@@ -9,6 +9,7 @@
 #include<SFML/Audio.hpp>
 #include<SFML/Window.hpp>
 #include<memory>
+#include<functional>
 
 class Game{
 public:
@@ -18,7 +19,7 @@ public:
     // const bool running()const;
 
 private:
-    AlchemyTable& initTable = AlchemyTable::getInstance();
+    AlchemyTable& initTable;
     sf::RenderWindow window;
     std::unique_ptr<Screen> currentScreen;
 };

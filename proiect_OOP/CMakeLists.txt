@@ -12,6 +12,9 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main main.cpp)
+add_executable(main main.cpp
+                    game.cpp
+                    mainMenu.cpp
+                    alchemyTable.cpp)
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)

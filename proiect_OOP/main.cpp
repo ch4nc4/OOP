@@ -32,8 +32,7 @@ design patern
 
 */
 
-#define SFML_STATIC
-#include "alchemyTable.h"
+// #define SFML_STATIC
 #include "game.h"
 #include<iostream>
 #include<string>

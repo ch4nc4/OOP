@@ -1,4 +1,4 @@
-#define SFML_STATIC
+// #define SFML_STATIC
 #include "screen.h"
 #include "alchemyTable.h"
 #include "game.h"
@@ -14,28 +14,42 @@
 // --- public functions of Game class ---
 
 //Constructor
-Game::Game() : window(sf::VideoMode({800,600}), "Alchemy"){
+Game::Game() : window(sf::VideoMode({800,600}), "Alchemy"), initTable(AlchemyTable::getInstance()){
     //primul lucru pe care il facem este sa initializam jocul
+    cout << "entered game constructor successfully" << '\n';
     try{
         this->initTable.verifInitGame();
-        this->initTable.initGame("elements", "recipes");
+        this->initTable.initGame("elements.txt", "recipes.txt");
     }
     catch(const std::exception& e){
         std::cerr << "Caught exception: " << e.what() << '\n';
     }
+    cout << "game initiated correctly" << '\n';
 
     //apoi setam currentScreen
-    changeScreen(std::make_unique<MainMenu>(
-        [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
-    ));
+    try{
+        changeScreen(std::make_unique<MainMenu>(
+            this->window,
+            [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
+        ));
+    }
+    catch(std::exception& e){
+        std::cerr << "[Game] Failed to create MainMenu: " << e.what() << "\n";
+        std::exit(1);
+    }
+
 };
 
 //functia de rulare a jocului
 void Game::run(){
     while(this->window.isOpen()){
-        this->currentScreen->handleEvents(this->window);
-        this->currentScreen->update();
-        this->currentScreen->render(window);
+        if (!this->currentScreen) {
+            std::cerr << "Error: currentScreen is nullptr!\n";
+            break;
+        }
+        this->currentScreen->handleEvents();
+        // this->currentScreen->update();
+        this->currentScreen->render();
     }
 }
 

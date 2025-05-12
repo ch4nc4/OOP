@@ -4,6 +4,7 @@
 #include<vector>
 #include<fstream>
 #include<map>
+#include<filesystem>
 
 ifstream recipeFile("recipes.txt");
 ifstream elemFile("elements.txt");
@@ -119,18 +120,28 @@ AlchemyTable& AlchemyTable::getInstance(){
 
 void AlchemyTable::initGame(const string& elemFileName, const string& recipeFileName){
     std::ifstream file1(elemFileName);
-    //TODO: verif daca fisierul s-a deschis -> daca nu aruncam eroare 
-
-    string elem;
-    while(std::getline(file1, elem)){
-        AlchemyTable::Element elemName;
-        elemName.setName(elem);
-        elements.insert({elemName.getName(), elemName});
+    if (!file1.is_open()) {
+        std::cerr << "Error: Could not open element file: " << elemFileName << '\n';
+        throw std::runtime_error("Element file could not be opened.");
     }
 
-
     std::ifstream file2(recipeFileName);
-    //TODO: verif daca fisierul s-a deschis -> daca nu aruncam eroare 
+    if (!file2.is_open()) {
+        std::cerr << "Error: Could not open recipe file: " << recipeFileName << '\n';
+        throw std::runtime_error("Recipe file could not be opened.");
+    }
+
+    std::cout << "Files opened successfully\n";
+
+    string elem = "";
+    while(std::getline(file1, elem)){
+        AlchemyTable::Element elemName;
+        elem.erase(0, elem.find_first_not_of(" \t\r"));
+        elem.erase(elem.find_last_not_of(" \t\r") + 1);
+        elemName.setName(elem);
+        elements.insert({elemName.getName(), elemName});
+        elem="";
+    }
 
     string recipe;
     while(std::getline(file2, recipe)){
@@ -143,9 +154,11 @@ void AlchemyTable::initGame(const string& elemFileName, const string& recipeFile
         el1.setName(elem1);
         el2.setName(elem2);
 
-        recipes.insert({{el1, el2}, res});
+        recipes.insert({{el1, el2}, result});
     }
 
+    std::cout << "[Game] elements.size() = " << elements.size()
+          << ", recipes.size() = " << recipes.size() << "\n";
     initTable = true;
 }
 
