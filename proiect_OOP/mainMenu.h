@@ -8,23 +8,52 @@
 #include<filesystem>
 #include<functional>
 #include<memory>
+#include<random>
 
 namespace fs = std::filesystem;
 
-//clasa de Main Menu
+//clasa de Main Menu        
 class MainMenu: public Screen{
-public:
-    MainMenu(sf::RenderWindow& window, std::function<void(std::unique_ptr<Screen>)> changeScreen);
-    void render() override;
 
-private:
-    void handleEvents() override;
-    // void update() override;
-    std::function<void(std::unique_ptr<Screen>)> requestScreenChange;
-    void initText(sf::Text &text, const int charSize, const float lineSpacing, const std::uint32_t style, const sf::Color fillColor,
-        const sf::Color outlineClr, const float thickness, const float pozx, const float pozy) override;
-    void onClose(const sf::Event::Closed& ev);
-    void onKeyPressed(const sf::Event::KeyPressed& ev);
+    class Bubble{
+        sf::CircleShape shape;
+        float speed;   // pixels per second
+    
+        public:
+            Bubble(float x, float radius, float speed);
 
-    sf::Font font;
+            sf::CircleShape& getShape(){
+                return this->shape;
+            }
+
+            float getSpeed(){
+                return this->speed;
+            }
+    };
+    public:
+        MainMenu(sf::RenderWindow& window, std::function<void(std::unique_ptr<Screen>)> changeScreen);
+        void render() override;
+        void update() override;
+
+    private:
+        //membrii privati ce ajuta la propagarea bulelor
+        std::vector<Bubble> bubbles;
+        sf::Clock bubbleClock; 
+        sf::Clock frameClock;  
+        std::mt19937 rng{std::random_device{}()};
+        std::uniform_real_distribution<float>  xDist{0.f, 800.f};
+        std::uniform_real_distribution<float>  radiusDist{5.f, 20.f};
+        std::uniform_real_distribution<float>  speedDist{50.f, 150.f};
+
+        //functia de creare a bulelor
+        void spawnBubble();
+
+        void handleEvents() override;
+        std::function<void(std::unique_ptr<Screen>)> requestScreenChange;
+        void initText(sf::Text &text, const int charSize, const float lineSpacing, const std::uint32_t style, const sf::Color fillColor,
+            const sf::Color outlineClr, const float thickness, const float pozx, const float pozy) override;
+        void onClose(const sf::Event::Closed& ev);
+        void onKeyPressed(const sf::Event::KeyPressed& ev);
+
+        sf::Font font;
 };

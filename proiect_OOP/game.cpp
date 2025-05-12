@@ -14,7 +14,7 @@
 // --- public functions of Game class ---
 
 //Constructor
-Game::Game() : window(sf::VideoMode({800,600}), "Alchemy"), initTable(AlchemyTable::getInstance()){
+Game::Game() : window(sf::VideoMode({1000,800}), "Alchemy"), initTable(AlchemyTable::getInstance()){
     //primul lucru pe care il facem este sa initializam jocul
     cout << "entered game constructor successfully" << '\n';
     try{
@@ -48,7 +48,7 @@ void Game::run(){
             break;
         }
         this->currentScreen->handleEvents();
-        // this->currentScreen->update();
+        this->currentScreen->update();
         this->currentScreen->render();
     }
 }
