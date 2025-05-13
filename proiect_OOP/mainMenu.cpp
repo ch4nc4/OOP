@@ -47,12 +47,27 @@ void MainMenu::render(){
     initText(welcomeMsg2, 40, 1, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 150, 150);
     this->window.draw(welcomeMsg2);
 
+    sf::RectangleShape newGameBtn({400.f, 100.f});
+    newGameBtn.setOutlineColor(sf::Color::Green);
+    newGameBtn.setOutlineThickness(0.8);
+    newGameBtn.setFillColor(sf::Color::Black);
+    newGameBtn.setPosition({125.f, 275.f});
+    this->window.draw(newGameBtn);
+   
+
     sf::Text newGame(this->font, "Start new game");
     initText(newGame, 38, 1, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 150, 300);
     this->window.draw(newGame);
 
+    sf::RectangleShape setThemeBtn({400.f, 100.f});
+    setThemeBtn.setOutlineColor(sf::Color::Green);
+    setThemeBtn.setOutlineThickness(0.8);
+    setThemeBtn.setFillColor(sf::Color::Black);
+    setThemeBtn.setPosition({125.f, 425.f});
+    this->window.draw(setThemeBtn);
+
     sf::Text gameTheme(this->font, "Set game theme");
-    initText(gameTheme, 38, 1, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 150, 400);
+    initText(gameTheme, 38, 1, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 150, 450);
     this->window.draw(gameTheme);
 
     this->window.display();
