@@ -157,8 +157,8 @@ void AlchemyTable::initGame(const string& elemFileName, const string& recipeFile
         recipes.insert({{el1, el2}, result});
     }
 
-    std::cout << "[Game] elements.size() = " << elements.size()
-          << ", recipes.size() = " << recipes.size() << "\n";
+    // std::cout << "[Game] elements.size() = " << elements.size()
+    //       << ", recipes.size() = " << recipes.size() << "\n";
     initTable = true;
 }
 

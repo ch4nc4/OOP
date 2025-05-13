@@ -16,9 +16,13 @@ static sf::Clock frameClock;
 //constructor
 MainMenu::MainMenu(sf::RenderWindow& window, std::function<void(std::unique_ptr<Screen>)> changeScreen): 
 Screen(window, std::move(changeScreen)),
-requestScreenChange(std::move(changeScreen)){
+requestScreenChange(std::move(changeScreen)),
+welcomeMsg(font, "Welcome Alchemist!"),
+welcomeMsg2(font, "let's start the experiments"),
+newGame(font, "New game"),
+gameTheme(font, "Set game theme"){
     
-    std::cout << "!!!";
+    // std::cout << "!!!";
     if(!font.openFromFile("Type Machine.ttf")){
         throw std::runtime_error("Failed to load font");
     }
@@ -39,36 +43,38 @@ void MainMenu::render(){
         window.draw(b.getShape());
 
     //adaugam elementele vizuale (UI)
-    sf::Text welcomeMsg(this->font, "Welcome alchemist!");
-    initText(welcomeMsg, 48, 2, sf::Text::Bold, sf::Color::Green, sf::Color::Black, 0.2, 100, 100);
-    this->window.draw(welcomeMsg);
+    // sf::Text welcomeMsg(this->font, "Welcome alchemist!");
+    initText(this->welcomeMsg, 48, 2, sf::Text::Bold, sf::Color::Green, sf::Color::Black, 0.2, 100, 100);
+    this->window.draw(this->welcomeMsg);
 
-    sf::Text welcomeMsg2(this->font, "let's start the experiments");
-    initText(welcomeMsg2, 40, 1, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 150, 150);
-    this->window.draw(welcomeMsg2);
+    // sf::Text welcomeMsg2(this->font, "let's start the experiments");
+    initText(this->welcomeMsg2, 40, 1, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 150, 150);
+    this->window.draw(this->welcomeMsg2);
 
-    sf::RectangleShape newGameBtn({400.f, 100.f});
-    newGameBtn.setOutlineColor(sf::Color::Green);
-    newGameBtn.setOutlineThickness(0.8);
-    newGameBtn.setFillColor(sf::Color::Black);
-    newGameBtn.setPosition({125.f, 275.f});
-    this->window.draw(newGameBtn);
+    // sf::RectangleShape newGameBtn({400.f, 100.f});
+    this->newGameBtn.setSize({400.f, 100.f});
+    this->newGameBtn.setOutlineColor(sf::Color::Green);
+    this->newGameBtn.setOutlineThickness(0.8);
+    this->newGameBtn.setFillColor(sf::Color::Black);
+    this->newGameBtn.setPosition({125.f, 275.f});
+    this->window.draw(this->newGameBtn);
    
 
-    sf::Text newGame(this->font, "Start new game");
-    initText(newGame, 38, 1, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 150, 300);
-    this->window.draw(newGame);
+    // sf::Text newGame(this->font, "Start new game");
+    initText(this->newGame, 38, 1, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 150, 300);
+    this->window.draw(this->newGame);
 
-    sf::RectangleShape setThemeBtn({400.f, 100.f});
-    setThemeBtn.setOutlineColor(sf::Color::Green);
-    setThemeBtn.setOutlineThickness(0.8);
-    setThemeBtn.setFillColor(sf::Color::Black);
-    setThemeBtn.setPosition({125.f, 425.f});
-    this->window.draw(setThemeBtn);
+    // sf::RectangleShape setThemeBtn({400.f, 100.f});
+    this->setThemeBtn.setSize({400.f, 100.f});
+    this->setThemeBtn.setOutlineColor(sf::Color::Green);
+    this->setThemeBtn.setOutlineThickness(0.8);
+    this->setThemeBtn.setFillColor(sf::Color::Black);
+    this->setThemeBtn.setPosition({125.f, 425.f});
+    this->window.draw(this->setThemeBtn);
 
-    sf::Text gameTheme(this->font, "Set game theme");
-    initText(gameTheme, 38, 1, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 150, 450);
-    this->window.draw(gameTheme);
+    // sf::Text gameTheme(this->font, "Set game theme");
+    initText(this->gameTheme, 38, 1, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 150, 450);
+    this->window.draw(this->gameTheme);
 
     this->window.display();
 }
@@ -81,14 +87,23 @@ void MainMenu::onClose(const sf::Event::Closed& ev){
 
 void MainMenu::onKeyPressed(const sf::Event::KeyPressed& ev){
     if(ev.scancode == sf::Keyboard::Scancode::Escape){
-        window.close();
+        this->window.close();
     }
+}
+
+void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev){
+     sf::Vector2f worldPos = window.mapPixelToCoords(ev.position);
+
+     //verificam pe rand daca s-a dat click pe primul sau al doilea buton
+    
+
 }
 
 void MainMenu::handleEvents(){
     this->window.handleEvents(
-        [this](const sf::Event::Closed&   ev){ onClose(ev); },
-        [this](const sf::Event::KeyPressed& ev){ onKeyPressed(ev); }
+        [this](const sf::Event::Closed& ev){ onClose(ev); },
+        [this](const sf::Event::KeyPressed& ev){ onKeyPressed(ev); },
+        [this](const sf::Event::MouseButtonPressed& ev){ onMousePressed(ev); }
     );
 }
 
@@ -114,8 +129,6 @@ void MainMenu::spawnBubble(){
 }
 
 void MainMenu::update(){
-    // in primul rand tratam evenimentele
-    this->handleEvents();
 
     //apoi cream bulele
     if (this->bubbleClock.getElapsedTime().asSeconds() > 0.2f) {

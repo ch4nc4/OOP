@@ -52,8 +52,18 @@ class MainMenu: public Screen{
         std::function<void(std::unique_ptr<Screen>)> requestScreenChange;
         void initText(sf::Text &text, const int charSize, const float lineSpacing, const std::uint32_t style, const sf::Color fillColor,
             const sf::Color outlineClr, const float thickness, const float pozx, const float pozy) override;
+
+        //functii pentru event handling
         void onClose(const sf::Event::Closed& ev);
         void onKeyPressed(const sf::Event::KeyPressed& ev);
+        void onMousePressed(const sf::Event::MouseButtonPressed& ev);
 
+        //UI elements
+        sf::Text welcomeMsg;
+        sf::Text welcomeMsg2;
+        sf::RectangleShape newGameBtn;
+        sf::Text newGame;
+        sf::RectangleShape setThemeBtn;
+        sf::Text gameTheme;
         sf::Font font;
 };
