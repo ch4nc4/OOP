@@ -91,11 +91,26 @@ void MainMenu::onKeyPressed(const sf::Event::KeyPressed& ev){
     }
 }
 
-void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev){
+void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev, const sf::RectangleShape& shape1, const sf::RectangleShape& shape2){
+    // raportam pozitia click-ului la intregul screen al desktopului
      sf::Vector2f worldPos = window.mapPixelToCoords(ev.position);
 
-     //verificam pe rand daca s-a dat click pe primul sau al doilea buton
-    
+     // luam intervalul in care se afla punctele incluse in dreptunghi
+     sf::FloatRect gameBtnBounds = shape1.getGlobalBounds();
+
+     // verificam daca click-ul a avut loc in acel interval
+     if(gameBtnBounds.contains(worldPos)){
+        std::cout << "Loading new game..." << '\n';
+        // daca am apasat pe "Start new game" atunci incepe un nou joc si trecem pe Game window
+     }
+
+     // analog pentru butonul de setare a temei jocului
+     sf::FloatRect themeBtnBounds = shape2.getGlobalBounds();
+
+     if(themeBtnBounds.contains(worldPos)){
+        std::cout << "Loading game customization window..." << '\n';
+        //daca am apasat pe "Set game theme" atunci trecem pe un alt window unde putem seta cromatica jocului
+     }
 
 }
 
@@ -103,7 +118,7 @@ void MainMenu::handleEvents(){
     this->window.handleEvents(
         [this](const sf::Event::Closed& ev){ onClose(ev); },
         [this](const sf::Event::KeyPressed& ev){ onKeyPressed(ev); },
-        [this](const sf::Event::MouseButtonPressed& ev){ onMousePressed(ev); }
+        [this](const sf::Event::MouseButtonPressed& ev){ onMousePressed(ev, this->newGameBtn, this->setThemeBtn); }
     );
 }
 

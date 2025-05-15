@@ -26,6 +26,19 @@ Game::Game() : window(sf::VideoMode({1000,800}), "Alchemy"), initTable(AlchemyTa
     }
     cout << "game initiated correctly" << '\n';
 
+    //apoi initializam soundtrack-ul jocului
+    if(!this->gameSoundtrack.openFromFile("Alchemy_soundtrack.wav")){
+         throw std::runtime_error("Couldn't load game soundtrack");
+    }
+    else{
+       std::cout << "Soundtrack successfully loaded" << '\n';
+    }
+
+    //si pornim rularea soundtrack-ului
+    this->gameSoundtrack.setVolume(30.f);
+    this->gameSoundtrack.setLooping(true);
+    this->gameSoundtrack.play();
+
     //apoi setam currentScreen
     try{
         changeScreen(std::make_unique<MainMenu>(

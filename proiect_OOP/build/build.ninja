@@ -47,7 +47,7 @@ cmake_ninja_workdir = C$:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_
 #############################################
 # Order-only phony target for main
 
-build cmake_object_order_depends_target_main: phony || cmake_object_order_depends_target_freetype cmake_object_order_depends_target_sfml-graphics cmake_object_order_depends_target_sfml-system cmake_object_order_depends_target_sfml-window
+build cmake_object_order_depends_target_main: phony || cmake_object_order_depends_target_FLAC cmake_object_order_depends_target_freetype cmake_object_order_depends_target_ogg cmake_object_order_depends_target_sfml-audio cmake_object_order_depends_target_sfml-graphics cmake_object_order_depends_target_sfml-system cmake_object_order_depends_target_sfml-window cmake_object_order_depends_target_vorbis cmake_object_order_depends_target_vorbisenc cmake_object_order_depends_target_vorbisfile
 
 build CMakeFiles/main.dir/main.cpp.obj: CXX_COMPILER__main_unscanned_Debug C$:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/main.cpp || cmake_object_order_depends_target_main
   DEFINES = -DSFML_STATIC
@@ -97,9 +97,9 @@ build CMakeFiles/main.dir/alchemyTable.cpp.obj: CXX_COMPILER__main_unscanned_Deb
 #############################################
 # Link the executable bin\main.exe
 
-build bin/main.exe: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/main.cpp.obj CMakeFiles/main.dir/game.cpp.obj CMakeFiles/main.dir/mainMenu.cpp.obj CMakeFiles/main.dir/alchemyTable.cpp.obj | _deps/sfml-build/lib/libsfml-graphics-s-d.a _deps/sfml-build/lib/libsfml-window-s-d.a _deps/sfml-build/lib/libsfml-system-s-d.a _deps/sfml-build/lib/libfreetyped.a || _deps/sfml-build/lib/libfreetyped.a _deps/sfml-build/lib/libsfml-graphics-s-d.a _deps/sfml-build/lib/libsfml-system-s-d.a _deps/sfml-build/lib/libsfml-window-s-d.a
+build bin/main.exe: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/main.cpp.obj CMakeFiles/main.dir/game.cpp.obj CMakeFiles/main.dir/mainMenu.cpp.obj CMakeFiles/main.dir/alchemyTable.cpp.obj | _deps/sfml-build/lib/libsfml-graphics-s-d.a _deps/sfml-build/lib/libsfml-audio-s-d.a _deps/sfml-build/lib/libsfml-window-s-d.a _deps/sfml-build/lib/libfreetyped.a _deps/sfml-build/lib/libsfml-system-s-d.a _deps/sfml-build/lib/libvorbisfiled.a _deps/sfml-build/lib/libvorbisencd.a _deps/sfml-build/lib/libvorbisd.a _deps/sfml-build/lib/libFLACd.a _deps/sfml-build/lib/liboggd.a || _deps/sfml-build/lib/libFLACd.a _deps/sfml-build/lib/libfreetyped.a _deps/sfml-build/lib/liboggd.a _deps/sfml-build/lib/libsfml-audio-s-d.a _deps/sfml-build/lib/libsfml-graphics-s-d.a _deps/sfml-build/lib/libsfml-system-s-d.a _deps/sfml-build/lib/libsfml-window-s-d.a _deps/sfml-build/lib/libvorbisd.a _deps/sfml-build/lib/libvorbisencd.a _deps/sfml-build/lib/libvorbisfiled.a
   FLAGS = -g
-  LINK_LIBRARIES = _deps/sfml-build/lib/libsfml-graphics-s-d.a  _deps/sfml-build/lib/libsfml-window-s-d.a  _deps/sfml-build/lib/libsfml-system-s-d.a  -lopengl32  -lwinmm  -lgdi32  _deps/sfml-build/lib/libfreetyped.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = _deps/sfml-build/lib/libsfml-graphics-s-d.a  _deps/sfml-build/lib/libsfml-audio-s-d.a  _deps/sfml-build/lib/libsfml-window-s-d.a  -lopengl32  -lgdi32  _deps/sfml-build/lib/libfreetyped.a  _deps/sfml-build/lib/libsfml-system-s-d.a  -lwinmm  _deps/sfml-build/lib/libvorbisfiled.a  _deps/sfml-build/lib/libvorbisencd.a  _deps/sfml-build/lib/libvorbisd.a  _deps/sfml-build/lib/libFLACd.a  _deps/sfml-build/lib/liboggd.a  -lm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\main.dir
   POST_BUILD = cd .
   PRE_LINK = cd .

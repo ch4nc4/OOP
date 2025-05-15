@@ -56,7 +56,7 @@ class MainMenu: public Screen{
         //functii pentru event handling
         void onClose(const sf::Event::Closed& ev);
         void onKeyPressed(const sf::Event::KeyPressed& ev);
-        void onMousePressed(const sf::Event::MouseButtonPressed& ev);
+        void onMousePressed(const sf::Event::MouseButtonPressed& ev, const sf::RectangleShape& shape1, const sf::RectangleShape& shape2);
 
         //UI elements
         sf::Text welcomeMsg;
