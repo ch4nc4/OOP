@@ -20,7 +20,9 @@ requestScreenChange(std::move(changeScreen)),
 welcomeMsg(font, "Welcome Alchemist!"),
 welcomeMsg2(font, "let's start the experiments"),
 newGame(font, "New game"),
-gameTheme(font, "Set game theme"){
+gameTheme(font, "Set game theme"),
+darkTheme(font, "Dark"),
+lightTheme(font, "Light"){
     
     // std::cout << "!!!";
     if(!font.openFromFile("Type Machine.ttf")){
@@ -76,8 +78,34 @@ void MainMenu::render(){
     initText(this->gameTheme, 38, 1, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 150, 450);
     this->window.draw(this->gameTheme);
 
+    if(this->buttonClicked){
+        // la apasarea butonului "Set game theme" jucatorului ii sunt oferite variantele cromatice
+        this->setDarkTheme.setSize({150.f, 80.f});
+        this->setDarkTheme.setOutlineColor(sf::Color::Green);
+        this->setDarkTheme.setOutlineThickness(0.8);
+        this->setDarkTheme.setFillColor(sf::Color::Green);
+        this->setDarkTheme.setPosition({80.f, 600.f});
+        this->window.draw(this->setDarkTheme);
+
+        initText(this->darkTheme, 28, 1, sf::Text::Italic, sf::Color::Black, sf::Color::Black, 0.1, 105, 625);
+        this->window.draw(darkTheme);
+
+        this->setLightTheme.setSize({150.f, 80.f});
+        this->setLightTheme.setOutlineColor(sf::Color::Green);
+        this->setLightTheme.setOutlineThickness(0.8);
+        this->setLightTheme.setFillColor(sf::Color::Black);
+        this->setLightTheme.setPosition({455.f, 600.f});
+        this->window.draw(this->setLightTheme);
+
+        initText(this->lightTheme, 28, 1, sf::Text::Italic, sf::Color::Green, sf::Color::Black, 0.1, 480, 625);
+        this->window.draw(lightTheme);
+
+    }
+
     this->window.display();
 }
+
+// -- am adaugat elementele vizuale ale Main Menu --
 
 // -- functii pentru event handling --
 
@@ -102,6 +130,8 @@ void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev, const sf:
      if(gameBtnBounds.contains(worldPos)){
         std::cout << "Loading new game..." << '\n';
         // daca am apasat pe "Start new game" atunci incepe un nou joc si trecem pe Game window
+
+        
      }
 
      // analog pentru butonul de setare a temei jocului
@@ -109,7 +139,8 @@ void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev, const sf:
 
      if(themeBtnBounds.contains(worldPos)){
         std::cout << "Loading game customization window..." << '\n';
-        //daca am apasat pe "Set game theme" atunci trecem pe un alt window unde putem seta cromatica jocului
+        //daca am apasat pe "Set game theme" atunci apar doua butoane cu care putem seta cromatica jocului
+        this->buttonClicked = true;
      }
 
 }

@@ -58,6 +58,10 @@ class MainMenu: public Screen{
         void onKeyPressed(const sf::Event::KeyPressed& ev);
         void onMousePressed(const sf::Event::MouseButtonPressed& ev, const sf::RectangleShape& shape1, const sf::RectangleShape& shape2);
 
+        //functie declansata la click pe "Set game theme" -> player-ul poate alege color scheme-ul jocului
+        //functia adauga in window 2
+        void chooseGameTheme();
+
         //UI elements
         sf::Text welcomeMsg;
         sf::Text welcomeMsg2;
@@ -66,4 +70,12 @@ class MainMenu: public Screen{
         sf::RectangleShape setThemeBtn;
         sf::Text gameTheme;
         sf::Font font;
+
+        //la click pe "Set game theme" apar 2 butoane
+        sf::RectangleShape setDarkTheme;
+        sf::RectangleShape setLightTheme;
+        sf::Text darkTheme;
+        sf::Text lightTheme;
+        //pentru ca acele butoane sa fie afisate, trebuie sa fim siguri ca am dat click pe "Set game theme"
+        bool buttonClicked = false;
 };
