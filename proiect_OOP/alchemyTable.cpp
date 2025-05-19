@@ -6,8 +6,8 @@
 #include<map>
 #include<filesystem>
 
-ifstream recipeFile("recipes.txt");
-ifstream elemFile("elements.txt");
+ifstream recipeFile("assets/recipes.txt");
+ifstream elemFile("assets/elements.txt");
 
 // --- initializarea elementelor statice ---
 std::map<std::string, AlchemyTable::Element> AlchemyTable::elements;

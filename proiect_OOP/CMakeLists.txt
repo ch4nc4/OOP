@@ -15,6 +15,12 @@ FetchContent_MakeAvailable(SFML)
 add_executable(main main.cpp
                     game.cpp
                     mainMenu.cpp
-                    alchemyTable.cpp)
+                    alchemyTable.cpp
+                    gamePlay.cpp)
+add_custom_command(TARGET main PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets
+    $<TARGET_FILE_DIR:main>/assets
+)
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics SFML::Audio)

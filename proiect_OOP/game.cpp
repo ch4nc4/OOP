@@ -19,7 +19,7 @@ Game::Game() : window(sf::VideoMode({1000,800}), "Alchemy"), initTable(AlchemyTa
     cout << "entered game constructor successfully" << '\n';
     try{
         this->initTable.verifInitGame();
-        this->initTable.initGame("elements.txt", "recipes.txt");
+        this->initTable.initGame("assets/elements.txt", "assets/recipes.txt");
     }
     catch(const std::exception& e){
         std::cerr << "Caught exception: " << e.what() << '\n';
@@ -27,7 +27,7 @@ Game::Game() : window(sf::VideoMode({1000,800}), "Alchemy"), initTable(AlchemyTa
     cout << "game initiated correctly" << '\n';
 
     //apoi initializam soundtrack-ul jocului
-    if(!this->gameSoundtrack.openFromFile("Alchemy_soundtrack.wav")){
+    if(!this->gameSoundtrack.openFromFile("assets/Alchemy_soundtrack.wav")){
          throw std::runtime_error("Couldn't load game soundtrack");
     }
     else{
@@ -43,6 +43,7 @@ Game::Game() : window(sf::VideoMode({1000,800}), "Alchemy"), initTable(AlchemyTa
     try{
         changeScreen(std::make_unique<MainMenu>(
             this->window,
+            this->initTable,
             [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
         ));
     }

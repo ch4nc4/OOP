@@ -9,14 +9,14 @@
 #include<functional>
 #include "mainMenu.h"
 #include "screen.h"
+#include "gamePlay.h"
 
 static sf::Clock frameClock;
 
 
 //constructor
-MainMenu::MainMenu(sf::RenderWindow& window, std::function<void(std::unique_ptr<Screen>)> changeScreen): 
-Screen(window, std::move(changeScreen)),
-requestScreenChange(std::move(changeScreen)),
+MainMenu::MainMenu(sf::RenderWindow& window, AlchemyTable& table, std::function<void(std::unique_ptr<Screen>)> changeScreen): 
+Screen(window, table, std::move(changeScreen)),
 welcomeMsg(font, "Welcome Alchemist!"),
 welcomeMsg2(font, "let's start the experiments"),
 newGame(font, "New game"),
@@ -25,11 +25,11 @@ darkTheme(font, "Dark"),
 lightTheme(font, "Light"){
     
     // std::cout << "!!!";
-    if(!font.openFromFile("Type Machine.ttf")){
+    if(!font.openFromFile("assets/fonts/Type Machine.ttf")){
         throw std::runtime_error("Failed to load font");
     }
     else{
-        sf::Font initFont("Type Machine.ttf");
+        sf::Font initFont("assets/fonts/Type Machine.ttf");
         this->font = initFont;
     }
 }
@@ -130,7 +130,18 @@ void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev, const sf:
      if(gameBtnBounds.contains(worldPos)){
         std::cout << "Loading new game..." << '\n';
         // daca am apasat pe "Start new game" atunci incepe un nou joc si trecem pe Game window
-
+        try{
+            this->changeScreen(std::make_unique<GamePlay>(
+                this->window,
+                this->table,
+                [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
+            ));
+            std::cout << "Game window successfully created !!!" << '\n';
+        }
+        catch(std::exception& e){
+            std::cerr << "[Game] Failed to create Game window: " << e.what() << "\n";
+            std::exit(1);
+        }
         
      }
 

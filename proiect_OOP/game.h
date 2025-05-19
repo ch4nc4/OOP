@@ -19,8 +19,10 @@ public:
     // const bool running()const;
 
 private:
-    AlchemyTable& initTable;
     sf::RenderWindow window;
     std::unique_ptr<Screen> currentScreen;
     sf::Music gameSoundtrack;
+
+protected:
+     AlchemyTable& initTable;
 };

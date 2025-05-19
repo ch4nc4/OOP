@@ -1,12 +1,13 @@
 #pragma once
 #include<SFML/Graphics.hpp>
 #include<functional>
+#include "alchemyTable.h"
 
 class Screen{
 public:
 
-    Screen(sf::RenderWindow& window, std::function<void(std::unique_ptr<Screen>)> changeScreen)
-    : window(window), changeScreen(std::move(changeScreen)){};
+    Screen(sf::RenderWindow& window, AlchemyTable& table, std::function<void(std::unique_ptr<Screen>)> changeScreen)
+    : window(window), table(table), changeScreen(std::move(changeScreen)){};
     virtual ~Screen() = default;
     virtual void handleEvents() = 0;
     virtual void render() = 0;
@@ -16,5 +17,6 @@ public:
 
 protected:
         sf::RenderWindow& window;
+        AlchemyTable &table;
         std::function<void(std::unique_ptr<Screen>)> changeScreen;
 };

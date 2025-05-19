@@ -1,5 +1,6 @@
 #pragma once
 #include "screen.h"
+#include "alchemyTable.h"
 #include<SFML/Graphics.hpp>
 #include<SFML/Window.hpp>
 #include<SFML/System.hpp>
@@ -31,7 +32,9 @@ class MainMenu: public Screen{
             }
     };
     public:
-        MainMenu(sf::RenderWindow& window, std::function<void(std::unique_ptr<Screen>)> changeScreen);
+        MainMenu(sf::RenderWindow& window, 
+                AlchemyTable& table,
+                std::function<void(std::unique_ptr<Screen>)> changeScreen);
         void render() override;
         void update() override;
 
@@ -49,7 +52,7 @@ class MainMenu: public Screen{
         void spawnBubble();
 
         void handleEvents() override;
-        std::function<void(std::unique_ptr<Screen>)> requestScreenChange;
+        // std::function<void(std::unique_ptr<Screen>)> requestScreenChange;
         void initText(sf::Text &text, const int charSize, const float lineSpacing, const std::uint32_t style, const sf::Color fillColor,
             const sf::Color outlineClr, const float thickness, const float pozx, const float pozy) override;
 
@@ -57,10 +60,6 @@ class MainMenu: public Screen{
         void onClose(const sf::Event::Closed& ev);
         void onKeyPressed(const sf::Event::KeyPressed& ev);
         void onMousePressed(const sf::Event::MouseButtonPressed& ev, const sf::RectangleShape& shape1, const sf::RectangleShape& shape2);
-
-        //functie declansata la click pe "Set game theme" -> player-ul poate alege color scheme-ul jocului
-        //functia adauga in window 2
-        void chooseGameTheme();
 
         //UI elements
         sf::Text welcomeMsg;

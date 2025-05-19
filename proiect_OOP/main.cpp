@@ -19,14 +19,13 @@ design patern
 - clasa window (mosteneste alchemytable)?? care are vectorul currentElem -> pair<Element, int> -> retine ce elemente si ce grad de multiplicare au la mom respectiv
 - ar fi nevoie si de o alta pagina in joc, unde sa fie display-uite toate elementele gasite
 - pe pagina de display a elementelor, pot fi selectate si adaugate la current gameplay
-- clasa de elemente -> mostenire (clasa de baza (abstracta) - functii virtuale)
 - display-able element -> elem is poz lui pe tabla
 - set cu ce elem am gas pana acum
 - fiecare window are clasa lui: start menu window, game window, show elements window (singletoane)
-- clasa game - initializez jocul -> mosteneste alchemytable + retin instanta in care ma aflu (gameState), handle events
+- clasa game - initializez jocul -> mosteneste alchemytable + retin instanta in care ma aflu (gameState), handle events *
 
-- clasa abstracta pt windows
-- uniqueptr pentru switch intre windows
+- clasa abstracta pt windows *
+- uniqueptr pentru switch intre windows *
 - clasa noua: GameData (fiecare window retine referinta catre datele acquired in joc pana la mom respectiv)
 -> asa nu pierdem nimic cand dam switch intre windows 
 
@@ -49,6 +48,12 @@ using namespace std;
 
 int main()
 {
+   cout << std::filesystem::current_path();
+
+   std::cout << "exists assets/images/potion.png? "
+          << std::boolalpha
+          << std::filesystem::exists("assets/images/potion.png")
+          << "\n";
    Game game;
    game.run();
    return 0;
