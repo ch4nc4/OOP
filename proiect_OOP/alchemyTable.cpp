@@ -167,4 +167,8 @@ void AlchemyTable::verifInitGame(){
         throw runtime_error("When an AlchemyTable object is declared it should also be initiated!!");
 }
 
+AlchemyTable::Element& AlchemyTable::getElemByName(const std::string& name)const{
+    return this->elements[name];
+}
+
 // --- sfarsit functii membre AlchemyTable ---

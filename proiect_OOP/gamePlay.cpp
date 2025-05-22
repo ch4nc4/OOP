@@ -9,11 +9,12 @@
 #include "gamePlay.h"
 #include "screen.h"
 #include "game.h"
+#include "displayableElem.h"
 
 
 //constructorul
-GamePlay::GamePlay(sf::RenderWindow& window, AlchemyTable& table, std::function<void(std::unique_ptr<Screen>)> changeScreen): 
-Screen(window, table, std::move(changeScreen)),
+GamePlay::GamePlay(sf::RenderWindow& window, AlchemyTable& table, TextureManager& texture, DataManager& data, std::function<void(std::unique_ptr<Screen>)> changeScreen): 
+Screen(window, table, texture, data, std::move(changeScreen)),
 requestScreenChange(std::move(changeScreen)),
 countDiscovered(font, "Discovered: 0 / 246"),
 questionMark(font, "?"),
@@ -22,7 +23,7 @@ returnSign(glyphFont, L"\u21BB"),
 bottleSprite(alchemyBottle){
     //setam fonturile
     if(!font.openFromFile("assets/fonts/Type Machine.ttf")){
-        throw std::runtime_error("Failed to load font");
+        throw std::runtime_error("Failed to load font\n");
     }
     else{
         sf::Font initFont("assets/fonts/Type Machine.ttf");
@@ -30,7 +31,7 @@ bottleSprite(alchemyBottle){
     }
 
     if(!glyphFont.openFromFile("assets/fonts/arial unicode ms.otf")){
-        throw std::runtime_error("Failed to load font");
+        throw std::runtime_error("Failed to load font\n");
     }
     else{
         sf::Font initFont("assets/fonts/arial unicode ms.otf");
@@ -46,6 +47,7 @@ bottleSprite(alchemyBottle){
     }
 
     //adaugam primele elemente pe tabla: Fire, Water, Earth, Air
+    this->data.initBaseElements();
 
 }
 
@@ -54,9 +56,11 @@ bottleSprite(alchemyBottle){
 void GamePlay::render(){
     this->window.clear(sf::Color::Black);
 
+    this->data.drawAll(this->window);
+
     std::string currentDiscovered = "";
     currentDiscovered = "Discovered: " + std::to_string(this->nrDiscovered);
-    currentDiscovered = currentDiscovered +  " / 246"; 
+    currentDiscovered = currentDiscovered +  " / 246";  
     this->countDiscovered.setString(currentDiscovered);
     initText(this->countDiscovered, 28, 2, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 325, 50);
     this->window.draw(this->countDiscovered);
@@ -121,7 +125,6 @@ void GamePlay::handleEvents(){
     this->window.handleEvents(
         [this](const sf::Event::Closed& ev){ onClose(ev); },
         [this](const sf::Event::KeyPressed& ev){ onKeyPressed(ev); }
-        // [this](const sf::Event::MouseButtonPressed& ev){ onMousePressed(ev, this->newGameBtn, this->setThemeBtn); }
     );
 }
 

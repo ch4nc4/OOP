@@ -31,6 +31,24 @@
 },
 {
   "directory": "C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build",
+  "command": "C:\\PROGRA~1\\CODEBL~1\\mingw64\\bin\\C__~1.EXE -DSFML_STATIC -isystem C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/sfml-src/include -g -o CMakeFiles\\main.dir\\textureManager.cpp.obj -c C:\\Users\\raluc\\OneDrive\\Desktop\\anul1\\semestrul2\\OOP\\OOP_Livia\\OOP\\proiect_OOP\\textureManager.cpp",
+  "file": "C:\\Users\\raluc\\OneDrive\\Desktop\\anul1\\semestrul2\\OOP\\OOP_Livia\\OOP\\proiect_OOP\\textureManager.cpp",
+  "output": "CMakeFiles\\main.dir\\textureManager.cpp.obj"
+},
+{
+  "directory": "C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build",
+  "command": "C:\\PROGRA~1\\CODEBL~1\\mingw64\\bin\\C__~1.EXE -DSFML_STATIC -isystem C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/sfml-src/include -g -o CMakeFiles\\main.dir\\displayableElem.cpp.obj -c C:\\Users\\raluc\\OneDrive\\Desktop\\anul1\\semestrul2\\OOP\\OOP_Livia\\OOP\\proiect_OOP\\displayableElem.cpp",
+  "file": "C:\\Users\\raluc\\OneDrive\\Desktop\\anul1\\semestrul2\\OOP\\OOP_Livia\\OOP\\proiect_OOP\\displayableElem.cpp",
+  "output": "CMakeFiles\\main.dir\\displayableElem.cpp.obj"
+},
+{
+  "directory": "C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build",
+  "command": "C:\\PROGRA~1\\CODEBL~1\\mingw64\\bin\\C__~1.EXE -DSFML_STATIC -isystem C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/sfml-src/include -g -o CMakeFiles\\main.dir\\dataManager.cpp.obj -c C:\\Users\\raluc\\OneDrive\\Desktop\\anul1\\semestrul2\\OOP\\OOP_Livia\\OOP\\proiect_OOP\\dataManager.cpp",
+  "file": "C:\\Users\\raluc\\OneDrive\\Desktop\\anul1\\semestrul2\\OOP\\OOP_Livia\\OOP\\proiect_OOP\\dataManager.cpp",
+  "output": "CMakeFiles\\main.dir\\dataManager.cpp.obj"
+},
+{
+  "directory": "C:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build",
   "command": "C:\\PROGRA~1\\CODEBL~1\\mingw64\\bin\\C__~1.EXE -DSFML_STATIC -D_CRT_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS -IC:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/sfml-src/include -IC:/Users/raluc/OneDrive/Desktop/anul1/semestrul2/OOP/OOP_Livia/OOP/proiect_OOP/build/_deps/sfml-src/src -g -fvisibility=hidden -fno-keep-inline-dllexport -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wcast-align -Wunused -Woverloaded-virtual -Wconversion -Wsign-conversion -Wdouble-promotion -Wformat=2 -Wimplicit-fallthrough -Wsuggest-override -Wnull-dereference -Wold-style-cast -Wpedantic -Wmisleading-indentation -Wduplicated-cond -Wlogical-op -Wduplicated-branches -o _deps\\sfml-build\\src\\SFML\\System\\CMakeFiles\\sfml-system.dir\\Clock.cpp.obj -c C:\\Users\\raluc\\OneDrive\\Desktop\\anul1\\semestrul2\\OOP\\OOP_Livia\\OOP\\proiect_OOP\\build\\_deps\\sfml-src\\src\\SFML\\System\\Clock.cpp",
   "file": "C:\\Users\\raluc\\OneDrive\\Desktop\\anul1\\semestrul2\\OOP\\OOP_Livia\\OOP\\proiect_OOP\\build\\_deps\\sfml-src\\src\\SFML\\System\\Clock.cpp",
   "output": "_deps\\sfml-build\\src\\SFML\\System\\CMakeFiles\\sfml-system.dir\\Clock.cpp.obj"

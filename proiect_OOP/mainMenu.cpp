@@ -15,8 +15,8 @@ static sf::Clock frameClock;
 
 
 //constructor
-MainMenu::MainMenu(sf::RenderWindow& window, AlchemyTable& table, std::function<void(std::unique_ptr<Screen>)> changeScreen): 
-Screen(window, table, std::move(changeScreen)),
+MainMenu::MainMenu(sf::RenderWindow& window, AlchemyTable& table, TextureManager& textureMng, DataManager& data, std::function<void(std::unique_ptr<Screen>)> changeScreen): 
+Screen(window, table, textureMng, data, std::move(changeScreen)),
 welcomeMsg(font, "Welcome Alchemist!"),
 welcomeMsg2(font, "let's start the experiments"),
 newGame(font, "New game"),
@@ -134,6 +134,8 @@ void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev, const sf:
             this->changeScreen(std::make_unique<GamePlay>(
                 this->window,
                 this->table,
+                this->texture,
+                this->data,
                 [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
             ));
             std::cout << "Game window successfully created !!!" << '\n';

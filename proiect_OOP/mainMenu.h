@@ -34,6 +34,8 @@ class MainMenu: public Screen{
     public:
         MainMenu(sf::RenderWindow& window, 
                 AlchemyTable& table,
+                TextureManager& textureMng,
+                DataManager& data,
                 std::function<void(std::unique_ptr<Screen>)> changeScreen);
         void render() override;
         void update() override;

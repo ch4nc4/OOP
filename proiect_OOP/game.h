@@ -25,4 +25,6 @@ private:
 
 protected:
      AlchemyTable& initTable;
+     TextureManager& textureMng;
+     DataManager data;
 };

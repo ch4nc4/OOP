@@ -16,7 +16,10 @@ add_executable(main main.cpp
                     game.cpp
                     mainMenu.cpp
                     alchemyTable.cpp
-                    gamePlay.cpp)
+                    gamePlay.cpp
+                    textureManager.cpp
+                    displayableElem.cpp
+                    dataManager.cpp)
 add_custom_command(TARGET main PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${CMAKE_SOURCE_DIR}/assets

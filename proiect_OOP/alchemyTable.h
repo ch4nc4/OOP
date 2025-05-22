@@ -54,6 +54,8 @@ class AlchemyTable{ // singleton //
 
         static void initGame(const string& elemFileName, const string& recipeFileName);
 
+        AlchemyTable::Element& getElemByName(const std::string& name)const;
+
         static void verifInitGame();
     
 };

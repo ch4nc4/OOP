@@ -16,6 +16,8 @@ class GamePlay: public Screen{
         //constructorul
         GamePlay(sf::RenderWindow& window, 
                 AlchemyTable& table,
+                TextureManager& texture,
+                DataManager& data,
                 std::function<void(std::unique_ptr<Screen>)> changeScreen);
         //clasele virtuale ale lui Screen
         void render() override;

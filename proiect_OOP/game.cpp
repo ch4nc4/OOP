@@ -14,7 +14,9 @@
 // --- public functions of Game class ---
 
 //Constructor
-Game::Game() : window(sf::VideoMode({1000,800}), "Alchemy"), initTable(AlchemyTable::getInstance()){
+Game::Game() : window(sf::VideoMode({1000,800}), "Alchemy"), initTable(AlchemyTable::getInstance()), 
+textureMng(TextureManager::getInstance()),
+data(initTable, textureMng){
     //primul lucru pe care il facem este sa initializam jocul
     cout << "entered game constructor successfully" << '\n';
     try{
@@ -44,6 +46,8 @@ Game::Game() : window(sf::VideoMode({1000,800}), "Alchemy"), initTable(AlchemyTa
         changeScreen(std::make_unique<MainMenu>(
             this->window,
             this->initTable,
+            this->textureMng,
+            this->data,
             [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
         ));
     }

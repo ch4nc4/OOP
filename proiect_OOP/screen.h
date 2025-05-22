@@ -2,12 +2,14 @@
 #include<SFML/Graphics.hpp>
 #include<functional>
 #include "alchemyTable.h"
+#include "textureManager.h"
+#include "dataManager.h"
 
 class Screen{
 public:
 
-    Screen(sf::RenderWindow& window, AlchemyTable& table, std::function<void(std::unique_ptr<Screen>)> changeScreen)
-    : window(window), table(table), changeScreen(std::move(changeScreen)){};
+    Screen(sf::RenderWindow& window, AlchemyTable& table, TextureManager& texture, DataManager& data, std::function<void(std::unique_ptr<Screen>)> changeScreen)
+    : window(window), table(table), texture(TextureManager::getInstance()), data(data), changeScreen(std::move(changeScreen)){};
     virtual ~Screen() = default;
     virtual void handleEvents() = 0;
     virtual void render() = 0;
@@ -17,6 +19,8 @@ public:
 
 protected:
         sf::RenderWindow& window;
-        AlchemyTable &table;
+        AlchemyTable& table;
+        TextureManager& texture;
+        DataManager& data;
         std::function<void(std::unique_ptr<Screen>)> changeScreen;
 };

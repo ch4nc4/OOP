@@ -29,6 +29,19 @@ design patern
 - clasa noua: GameData (fiecare window retine referinta catre datele acquired in joc pana la mom respectiv)
 -> asa nu pierdem nimic cand dam switch intre windows 
 
+- do not forget to do:
+   dark and light theme
+   main menu button functionality (the little alchemy bottle)
+- buttons on main game screen:
+   "?" = game info, how elements are combined, game logic 
+   "+" = add element, takes you to Add Element Window
+   "<-" = deletes last element
+
+- Texture Manager: singleton care se ocupa cu incarcarea icon-urilor elementelor
+                  pentru ca este singleton, singurul ob. de acest tip este creat in Screen
+                  si evident ramane valabil fiecarui window al jocului
+
+
 */
 
 // #define SFML_STATIC
@@ -48,12 +61,6 @@ using namespace std;
 
 int main()
 {
-   cout << std::filesystem::current_path();
-
-   std::cout << "exists assets/images/potion.png? "
-          << std::boolalpha
-          << std::filesystem::exists("assets/images/potion.png")
-          << "\n";
    Game game;
    game.run();
    return 0;
