@@ -19,6 +19,7 @@ class GamePlay: public Screen{
                 TextureManager& texture,
                 DataManager& data,
                 std::function<void(std::unique_ptr<Screen>)> changeScreen);
+        ~GamePlay() override;
         //clasele virtuale ale lui Screen
         void render() override;
         void update() override;
@@ -33,6 +34,13 @@ class GamePlay: public Screen{
         //functii pentru event handling
         void onClose(const sf::Event::Closed& ev);
         void onKeyPressed(const sf::Event::KeyPressed& ev);
+        void onMousePressed(const sf::Event::MouseButtonPressed& ev);
+        void onMouseMoved(const sf::Event::MouseMoved& ev);
+        void onMouseReleased(const sf::Event::MouseButtonReleased& ev);
+        // membrii care ajuta la element dragging
+        bool dragging = false;
+        DisplayableElem* dragged = nullptr;
+        sf::Vector2f dragOffset;
 
         //UI elements
         sf::Font font;

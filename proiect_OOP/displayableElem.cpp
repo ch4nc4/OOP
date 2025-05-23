@@ -11,11 +11,11 @@
 
 //constructorul
 DisplayableElem::DisplayableElem(AlchemyTable::Element& element, TextureManager& texture, int pozx, int pozy):
-elem(element),
+elem(&element),
 iconPath("assets\\icons\\" + element.getName() + ".png"),
 sprite(texture.load(element.getName(),
         iconPath)){
-    std::cout << "Creating displayable: " << this->elem.getName() << '\n';
+    std::cout << "Creating displayable: " << this->elem->getName() << '\n';
     std::cout << "Searching for texture in: " << this->iconPath << '\n';
 
     const sf::Texture& tex = this->sprite.getTexture();
@@ -26,6 +26,11 @@ sprite(texture.load(element.getName(),
     sprite.setPosition({float(pozx), float(pozy)});
 
 }
+
+//destructorul
+// DisplayableElem::~DisplayableElem(){
+//     delete this->elem;
+// }
 
 void DisplayableElem::draw(sf::RenderWindow& window){
     try{

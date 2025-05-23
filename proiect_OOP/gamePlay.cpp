@@ -51,6 +51,12 @@ bottleSprite(alchemyBottle){
 
 }
 
+//destructorul
+
+GamePlay::~GamePlay(){
+    delete this->dragged;
+}
+
 // -- adaugam elementele vizuale ale Game Play --
 
 void GamePlay::render(){
@@ -121,12 +127,51 @@ void GamePlay::onKeyPressed(const sf::Event::KeyPressed& ev){
     }
 }
 
+void GamePlay::onMousePressed(const sf::Event::MouseButtonPressed& ev){
+    if(ev.button != sf::Mouse::Button::Left)
+        return;
+    
+        sf::Vector2f worldPos = this->window.mapPixelToCoords(ev.position);
+
+        for(auto& [name, tex] : this->data.updatedElemOnTable){
+            for(auto& elem : tex){
+                if(elem.sprite.getGlobalBounds().contains(worldPos)){
+                    this->dragging = true;
+                    this->dragged = &elem;
+                    this->dragOffset = worldPos - elem.sprite.getPosition();
+                    return;
+                }
+            }
+
+        }
+}
+
+void GamePlay::onMouseMoved(const sf::Event::MouseMoved& ev){
+    if(!this->dragging || !this->dragged){
+        return;
+    }
+    sf::Vector2f worldPos = this->window.mapPixelToCoords(ev.position);
+    this->dragged->sprite.setPosition(worldPos - this->dragOffset);
+}
+
+void GamePlay::onMouseReleased(const sf::Event::MouseButtonReleased& ev){
+    if(ev.button == sf::Mouse::Button::Left && this->dragging){
+        this->dragging = false;
+        dragged = nullptr;
+    }
+}
+
 void GamePlay::handleEvents(){
     this->window.handleEvents(
         [this](const sf::Event::Closed& ev){ onClose(ev); },
-        [this](const sf::Event::KeyPressed& ev){ onKeyPressed(ev); }
+        [this](const sf::Event::KeyPressed& ev){ onKeyPressed(ev); },
+        [this](const sf::Event::MouseButtonPressed& ev){ onMousePressed(ev); },
+        [this](const sf::Event::MouseMoved& ev){ onMouseMoved(ev); },
+        [this](const sf::Event::MouseButtonReleased& ev){ onMouseReleased(ev); }
     );
 }
+
+// -- sfarsit functii pentru event handling --
 
 
 // personalizarea textului care apare pe screen

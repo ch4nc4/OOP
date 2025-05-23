@@ -15,9 +15,13 @@ class DisplayableElem{
                         TextureManager& texture,
                         int pozx,
                         int pozy);
+        //destructor: dezalocam memoria alocata pointerului element
+        // ~DisplayableElem();
         void draw(sf::RenderWindow& window);
     private:
-        AlchemyTable::Element& elem;
+        AlchemyTable::Element* elem;
         std::string iconPath;
+    public:
         sf::Sprite sprite;
+        
 };

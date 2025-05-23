@@ -29,6 +29,9 @@ class DataManager{
 
     // void updateElems();
 
+    //cand stergem un element de pe tabla
+    void eraseElem(const std::string& name, int pozx, int pozy);
+
 private:
     //membrii care ajuta cu pozitionarea random a elementelor pe tabla cand sunt adaugate
     std::mt19937   rng{std::random_device{}()};
@@ -38,7 +41,9 @@ private:
     
 
     AlchemyTable& table;            
-    TextureManager& texture;         
+    TextureManager& texture;
+    
+public:
 
     //numele tuturor elementelor gasite
     std::set<std::string> discovered; 
@@ -46,7 +51,7 @@ private:
     std::map<std::string,int> tableMultipliers;  
 
     //elementele curente de pe tabla
-    std::map<std::string, std::stack<DisplayableElem>> currentElem;
+    // std::map<std::string, std::stack<DisplayableElem>> currentElem;
     //tot elementele curente dar mai usor de desenat (nu foloseste stack)
     std::map<std::string, vector<DisplayableElem>> updatedElemOnTable;
 

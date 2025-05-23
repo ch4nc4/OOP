@@ -44,17 +44,33 @@ void DataManager::addDiscovered(const std::string& name) {
     int y = yDist(rng);
    
     std::cout << "generating sprites at pos: "  << x << " " << y << '\n';
-    try{
-        DisplayableElem newElem(table.getElemByName(name), texture,x,y);
-         currentElem[name].push(newElem);  
-        updatedElemOnTable[name].push_back(newElem);  
-    }
-    catch(std::exception& e){
-        std::cout << "couldn't create displayable" << e.what() << '\n';
+    if (this->updatedElemOnTable.find(name) == this->updatedElemOnTable.end()){
+        try{
+            DisplayableElem newElem(table.getElemByName(name), texture,x,y);
+            // this->currentElem[name].emplace(newElem);  
+            this->updatedElemOnTable[name].emplace_back(newElem);  
+        }
+        catch(std::exception& e){
+            std::cout << "couldn't create displayable" << e.what() << '\n';
+        }
     }
     
     tableMultipliers[name] += 1;
 
+}
+
+void DataManager::eraseElem(const std::string & name, int pozx, int pozy){
+    for(auto it = updatedElemOnTable[name].begin(); it != updatedElemOnTable[name].end(); ++it){
+        //cautam in aparitiile elementului pe tabla
+        sf::Vector2f posErase = {static_cast<float>(pozx), static_cast<float>(pozy)};
+
+        //cand am gasit elementul "name" la pozitia {pozx, pozy}
+        if(it->sprite.getPosition() == posErase){
+            updatedElemOnTable[name].erase(it);
+            return;
+        }
+
+    }   
 }
 
 void DataManager::drawAll(sf::RenderWindow& window){
