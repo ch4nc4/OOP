@@ -57,6 +57,9 @@ class AlchemyTable{ // singleton //
         AlchemyTable::Element& getElemByName(const std::string& name)const;
 
         static void verifInitGame();
-    
+
+        bool canCombine(AlchemyTable::Element e1, AlchemyTable::Element e2)const;
+
+        AlchemyTable::Element resElem(AlchemyTable::Element e1, AlchemyTable::Element e2)const;
 };
 

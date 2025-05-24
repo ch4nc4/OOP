@@ -26,7 +26,7 @@ design patern
 
 - clasa abstracta pt windows *
 - uniqueptr pentru switch intre windows *
-- clasa noua: GameData (fiecare window retine referinta catre datele acquired in joc pana la mom respectiv)
+- clasa noua: GameData (fiecare window retine referinta catre datele acquired in joc pana la mom respectiv) *
 -> asa nu pierdem nimic cand dam switch intre windows 
 
 - do not forget to do:
@@ -39,7 +39,7 @@ design patern
 
 - Texture Manager: singleton care se ocupa cu incarcarea icon-urilor elementelor
                   pentru ca este singleton, singurul ob. de acest tip este creat in Screen
-                  si evident ramane valabil fiecarui window al jocului
+                  si evident ramane valabil fiecarui window al jocului * 
 
 
 */

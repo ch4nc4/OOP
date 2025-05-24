@@ -9,6 +9,7 @@
 #include<filesystem>
 #include<functional>
 #include<memory>
+#include<queue>
 
 //aici se joaca de fapt jocul
 class GamePlay: public Screen{
@@ -37,10 +38,23 @@ class GamePlay: public Screen{
         void onMousePressed(const sf::Event::MouseButtonPressed& ev);
         void onMouseMoved(const sf::Event::MouseMoved& ev);
         void onMouseReleased(const sf::Event::MouseButtonReleased& ev);
+
+
+        //functie pentru gasirea coliziunilor intre elemente
+        void checkColisions(vector<DisplayableElem>& v1, 
+            vector<DisplayableElem>& v2,
+             queue<pair<DisplayableElem*, DisplayableElem*>>& q);
+
         // membrii care ajuta la element dragging
         bool dragging = false;
         DisplayableElem* dragged = nullptr;
         sf::Vector2f dragOffset;
+
+        //membrii care ajuta la combinarea elementelor
+        //pe masura ce gasim posibile combinatii intre elemente le retinem
+        //trebuie sa retinem pointeri catre displayable pentru ca vom vrea sa eliminam aceste elemente
+        //si ele putand fi mutate => nu le putem stii pozitia exacta niciodata
+        queue<pair<DisplayableElem*, DisplayableElem*>> toCombine;
 
         //UI elements
         sf::Font font;
@@ -62,5 +76,16 @@ class GamePlay: public Screen{
         sf::Text questionMark;
         sf::Text plus;
         sf::Text returnSign;
+
+        //variabila care retine daca am apasat butonul '?'
+        bool showInfoBox = false;
+
+        //pop-up generat de apasarea butonului '?'
+        sf::RectangleShape infoRect;
+        sf::Text infoTitle;
+        sf::Text plusBtn;
+        sf::Text retBtn;
+        sf::Text mainBtn;
+        sf::Text mergeElem;
 
 };

@@ -171,4 +171,19 @@ AlchemyTable::Element& AlchemyTable::getElemByName(const std::string& name)const
     return this->elements[name];
 }
 
+bool AlchemyTable::canCombine(AlchemyTable::Element e1, AlchemyTable::Element e2)const{
+    return this->recipes.find({e1, e2}) != this->recipes.end();
+}
+
+AlchemyTable::Element AlchemyTable::resElem(AlchemyTable::Element e1, AlchemyTable::Element e2)const{
+    //gasim rezultatul combinarii a doua elemente
+    if(this->recipes.find({e1, e2}) == this->recipes.end()){
+        throw std::runtime_error("aceste elemente nu au o reteta asociata!!");
+    }
+    else
+        return this->recipes[{e1, e2}];
+    
+}
+
+
 // --- sfarsit functii membre AlchemyTable ---

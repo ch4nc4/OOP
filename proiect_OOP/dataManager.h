@@ -22,7 +22,7 @@ class DataManager{
     void initBaseElements();
 
     //cand se adauga un element
-    void addDiscovered(const std::string& name);
+    void addDiscovered(DisplayableElem display);
 
     //adaugam in window elementele gasite 
     void drawAll(sf::RenderWindow& window);
@@ -30,7 +30,7 @@ class DataManager{
     // void updateElems();
 
     //cand stergem un element de pe tabla
-    void eraseElem(const std::string& name, int pozx, int pozy);
+    void eraseElem(DisplayableElem* del);
 
 private:
     //membrii care ajuta cu pozitionarea random a elementelor pe tabla cand sunt adaugate

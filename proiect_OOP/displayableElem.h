@@ -18,8 +18,8 @@ class DisplayableElem{
         //destructor: dezalocam memoria alocata pointerului element
         // ~DisplayableElem();
         void draw(sf::RenderWindow& window);
-    private:
         AlchemyTable::Element* elem;
+    private:
         std::string iconPath;
     public:
         sf::Sprite sprite;
