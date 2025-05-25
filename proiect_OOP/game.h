@@ -15,8 +15,7 @@ class Game{
 public:
     Game();
     void run();
-    void changeScreen(std::unique_ptr<Screen> newScreen);
-    // const bool running()const;
+    // void changeScreen(std::unique_ptr<Screen> newScreen);
 
 private:
     sf::RenderWindow window;

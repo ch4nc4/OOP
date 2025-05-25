@@ -18,8 +18,7 @@ class GamePlay: public Screen{
         GamePlay(sf::RenderWindow& window, 
                 AlchemyTable& table,
                 TextureManager& texture,
-                DataManager& data,
-                std::function<void(std::unique_ptr<Screen>)> changeScreen);
+                DataManager& data);
         ~GamePlay() override;
         //clasele virtuale ale lui Screen
         void render() override;
@@ -27,15 +26,14 @@ class GamePlay: public Screen{
 
     private:
         //functia de schimbare a ecranului si alte functii virtuale ale Screen
-        void handleEvents() override;
-        std::function<void(std::unique_ptr<Screen>)> requestScreenChange;
+        std::unique_ptr<Screen> handleEvents() override;
         void initText(sf::Text &text, const int charSize, const float lineSpacing, const std::uint32_t style, const sf::Color fillColor,
             const sf::Color outlineClr, const float thickness, const float pozx, const float pozy) override;
 
         //functii pentru event handling
         void onClose(const sf::Event::Closed& ev);
         void onKeyPressed(const sf::Event::KeyPressed& ev);
-        void onMousePressed(const sf::Event::MouseButtonPressed& ev);
+        void onMousePressed(const sf::Event::MouseButtonPressed& ev, std::unique_ptr<Screen>& next);
         void onMouseMoved(const sf::Event::MouseMoved& ev);
         void onMouseReleased(const sf::Event::MouseButtonReleased& ev);
 

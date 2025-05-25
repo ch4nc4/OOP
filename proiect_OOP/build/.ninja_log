@@ -331,3 +331,8 @@
 84	2126	7698061385879964	CMakeFiles/main.dir/main.cpp.obj	a7ca86eb01c0deda
 92	3397	7698061385965257	CMakeFiles/main.dir/gamePlay.cpp.obj	f82f36eb65389afe
 3397	7029	7698061419012954	bin/main.exe	4168826710808cc9
+252	3359	7698864038026589	CMakeFiles/main.dir/main.cpp.obj	a7ca86eb01c0deda
+273	3629	7698864038215001	CMakeFiles/main.dir/game.cpp.obj	fa580da4fa52657f
+287	4894	7698864038401059	CMakeFiles/main.dir/mainMenu.cpp.obj	c95248a89b6aea95
+302	5004	7698864038555706	CMakeFiles/main.dir/gamePlay.cpp.obj	f82f36eb65389afe
+5005	11245	7698864085572739	bin/main.exe	4168826710808cc9

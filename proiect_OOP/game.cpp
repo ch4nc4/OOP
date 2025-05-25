@@ -43,13 +43,14 @@ data(initTable, textureMng){
 
     //apoi setam currentScreen
     try{
-        changeScreen(std::make_unique<MainMenu>(
-            this->window,
-            this->initTable,
-            this->textureMng,
-            this->data,
-            [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
-        ));
+        // changeScreen(std::make_unique<MainMenu>(
+        //     this->window,
+        //     this->initTable,
+        //     this->textureMng,
+        //     this->data,
+        //     [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
+        // ));
+        this->currentScreen = std::make_unique<MainMenu>(window, initTable, textureMng, data);
     }
     catch(std::exception& e){
         std::cerr << "[Game] Failed to create MainMenu: " << e.what() << "\n";
@@ -65,18 +66,19 @@ void Game::run(){
             std::cerr << "Error: currentScreen is nullptr!\n";
             break;
         }
-        this->currentScreen->handleEvents();
+
+        if(auto next = this->currentScreen->handleEvents()){
+            //daca screenul curent cere o schimbare de window
+            //atunci schimbam window-ul si apoi continuam sa dam handle la events
+            this->currentScreen = std::move(next);
+            continue;
+        }
         this->currentScreen->update();
         this->currentScreen->render();
     }
 }
 
-//functia care verifica daca jocul ruleaza
-/*const bool Game::running()const{
-    return this->window.isOpen();
-}*/
-
 //functia care face switch intre windows
-void Game::changeScreen(std::unique_ptr<Screen> newScreen){
-    currentScreen = std::move(newScreen);
-}
+// void Game::changeScreen(std::unique_ptr<Screen> newScreen){
+//     currentScreen = std::move(newScreen);
+// }

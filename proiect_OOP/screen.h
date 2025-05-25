@@ -8,10 +8,10 @@
 class Screen{
 public:
 
-    Screen(sf::RenderWindow& window, AlchemyTable& table, TextureManager& texture, DataManager& data, std::function<void(std::unique_ptr<Screen>)> changeScreen)
-    : window(window), table(table), texture(TextureManager::getInstance()), data(data), changeScreen(std::move(changeScreen)){};
+    Screen(sf::RenderWindow& window, AlchemyTable& table, TextureManager& texture, DataManager& data)
+    : window(window), table(table), texture(TextureManager::getInstance()), data(data){};
     virtual ~Screen() = default;
-    virtual void handleEvents() = 0;
+    virtual std::unique_ptr<Screen> handleEvents() = 0;
     virtual void render() = 0;
     virtual void update() = 0;
     virtual void initText(sf::Text &text, const int charSize, const float lineSpacing, const std::uint32_t style, const sf::Color fillColor,
@@ -22,5 +22,5 @@ protected:
         AlchemyTable& table;
         TextureManager& texture;
         DataManager& data;
-        std::function<void(std::unique_ptr<Screen>)> changeScreen;
+        // std::function<void(std::unique_ptr<Screen>)> changeScreen;
 };

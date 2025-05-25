@@ -15,8 +15,8 @@ static sf::Clock frameClock;
 
 
 //constructor
-MainMenu::MainMenu(sf::RenderWindow& window, AlchemyTable& table, TextureManager& textureMng, DataManager& data, std::function<void(std::unique_ptr<Screen>)> changeScreen): 
-Screen(window, table, textureMng, data, std::move(changeScreen)),
+MainMenu::MainMenu(sf::RenderWindow& window, AlchemyTable& table, TextureManager& textureMng, DataManager& data): 
+Screen(window, table, textureMng, data),
 welcomeMsg(font, "Welcome Alchemist!"),
 welcomeMsg2(font, "let's start the experiments"),
 newGame(font, "New game"),
@@ -119,7 +119,10 @@ void MainMenu::onKeyPressed(const sf::Event::KeyPressed& ev){
     }
 }
 
-void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev, const sf::RectangleShape& shape1, const sf::RectangleShape& shape2){
+void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev,
+      std::unique_ptr<Screen>& next,
+      const sf::RectangleShape& shape1,
+       const sf::RectangleShape& shape2){
     // raportam pozitia click-ului la intregul screen al desktopului
      sf::Vector2f worldPos = window.mapPixelToCoords(ev.position);
 
@@ -131,14 +134,16 @@ void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev, const sf:
         std::cout << "Loading new game..." << '\n';
         // daca am apasat pe "Start new game" atunci incepe un nou joc si trecem pe Game window
         try{
-            this->changeScreen(std::make_unique<GamePlay>(
-                this->window,
-                this->table,
-                this->texture,
-                this->data,
-                [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
-            ));
+            // this->changeScreen(std::make_unique<GamePlay>(
+            //     this->window,
+            //     this->table,
+            //     this->texture,
+            //     this->data,
+            //     [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
+            // ));
+            next = std::make_unique<GamePlay>(window, table, texture, data);
             std::cout << "Game window successfully created !!!" << '\n';
+            return;
         }
         catch(std::exception& e){
             std::cerr << "[Game] Failed to create Game window: " << e.what() << "\n";
@@ -158,12 +163,17 @@ void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev, const sf:
 
 }
 
-void MainMenu::handleEvents(){
+std::unique_ptr<Screen> MainMenu::handleEvents(){
+    //aici pastram urmatorul screen cerut de evenimente
+    std::unique_ptr<Screen> next = nullptr;
+
     this->window.handleEvents(
         [this](const sf::Event::Closed& ev){ onClose(ev); },
         [this](const sf::Event::KeyPressed& ev){ onKeyPressed(ev); },
-        [this](const sf::Event::MouseButtonPressed& ev){ onMousePressed(ev, this->newGameBtn, this->setThemeBtn); }
+        [this, &next](const sf::Event::MouseButtonPressed& ev){
+             onMousePressed(ev, next, this->newGameBtn, this->setThemeBtn); }
     );
+    return next;
 }
 
 // -- sfarsitul functiilor pentru event handling

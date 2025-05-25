@@ -14,9 +14,8 @@
 
 
 //constructorul
-GamePlay::GamePlay(sf::RenderWindow& window, AlchemyTable& table, TextureManager& texture, DataManager& data, std::function<void(std::unique_ptr<Screen>)> changeScreen): 
-Screen(window, table, texture, data, std::move(changeScreen)),
-requestScreenChange(std::move(changeScreen)),
+GamePlay::GamePlay(sf::RenderWindow& window, AlchemyTable& table, TextureManager& texture, DataManager& data): 
+Screen(window, table, texture, data),
 countDiscovered(font, "Discovered: 0 / 246"),
 questionMark(font, "?"),
 plus(font, "+"),
@@ -161,7 +160,7 @@ void GamePlay::onKeyPressed(const sf::Event::KeyPressed& ev){
     }
 }
 
-void GamePlay::onMousePressed(const sf::Event::MouseButtonPressed& ev){
+void GamePlay::onMousePressed(const sf::Event::MouseButtonPressed& ev, std::unique_ptr<Screen>& next){
     if(ev.button != sf::Mouse::Button::Left)
         return;
     
@@ -196,22 +195,25 @@ void GamePlay::onMousePressed(const sf::Event::MouseButtonPressed& ev){
         this->showInfoBox = true;
     }
 
-    // if(this->bottleSprite.getGlobalBounds().contains(worldPos)){
-    //     try{
-    //         changeScreen(std::make_unique<MainMenu>(
-    //             this->window,
-    //             this->table,
-    //             this->texture,
-    //             this->data,
-    //             [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
-    //         ));
-    //         std::cout << "Successfully returned to main menu !!!" << '\n';
-    //     }
-    //     catch(std::exception& e){
-    //         std::cerr << "[Game] Failed to return to main menu: " << e.what() << "\n";
-    //         std::exit(1);
-    //     }
-    //     return;
+    if(this->bottleSprite.getGlobalBounds().contains(worldPos)){
+         try{
+        //     changeScreen(std::make_unique<MainMenu>(
+        //         this->window,
+        //         this->table,
+        //         this->texture,
+        //         this->data,
+        //         [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
+        //     ));
+            next = std::make_unique<MainMenu>(window, table, texture, data);
+            std::cout << "Successfully returned to main menu !!!" << '\n';
+            return;
+        }
+        catch(std::exception& e){
+            std::cerr << "[Game] Failed to return to main menu: " << e.what() << "\n";
+            std::exit(1);
+        }
+        return;
+    }
     
 }
 
@@ -230,14 +232,19 @@ void GamePlay::onMouseReleased(const sf::Event::MouseButtonReleased& ev){
     }
 }
 
-void GamePlay::handleEvents(){
+std::unique_ptr<Screen> GamePlay::handleEvents(){
+    std::unique_ptr<Screen> next = nullptr;
+
     this->window.handleEvents(
         [this](const sf::Event::Closed& ev){ onClose(ev); },
         [this](const sf::Event::KeyPressed& ev){ onKeyPressed(ev); },
-        [this](const sf::Event::MouseButtonPressed& ev){ onMousePressed(ev); },
+        [this, &next](const sf::Event::MouseButtonPressed& ev){
+             onMousePressed(ev, next); },
         [this](const sf::Event::MouseMoved& ev){ onMouseMoved(ev); },
         [this](const sf::Event::MouseButtonReleased& ev){ onMouseReleased(ev); }
     );
+
+    return next;
 }
 
 // -- sfarsit functii pentru event handling --
