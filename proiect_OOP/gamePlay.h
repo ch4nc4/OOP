@@ -43,6 +43,7 @@ class GamePlay: public Screen{
             vector<DisplayableElem>& v2,
              queue<pair<DisplayableElem*, DisplayableElem*>>& q);
 
+
         // membrii care ajuta la element dragging
         bool dragging = false;
         DisplayableElem* dragged = nullptr;
@@ -60,7 +61,6 @@ class GamePlay: public Screen{
 
         //va fi afisat cate elemente au fost descoperite in sesiunea curenta
         sf::Text countDiscovered;
-        int nrDiscovered = 0;
 
         //in coltul dreapta sus al ecranului va fi un buton care duce jucatorul inapoi in Main Menu
         sf::Texture alchemyBottle;
@@ -86,4 +86,20 @@ class GamePlay: public Screen{
         sf::Text mainBtn;
         sf::Text mergeElem;
 
+        //variabila care retine ca am apasat '+'
+        bool showAddBox = false;
+
+        //pop-up generat de apasarea butonului '+'
+        sf::RectangleShape addRect;
+        sf::Text addTitle;
+        int popupCols = 5;
+        float cellSize = 100.f;
+        float cellPadding = 50.f;
+
+        //buton de intoarcere la gamePlay
+        sf::RectangleShape btn;
+        sf::Text arrow;
+
+        //variabila care retine ca am apasat arrow
+        bool deleteElem = false;
 };

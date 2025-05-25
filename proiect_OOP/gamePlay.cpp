@@ -16,7 +16,7 @@
 //constructorul
 GamePlay::GamePlay(sf::RenderWindow& window, AlchemyTable& table, TextureManager& texture, DataManager& data): 
 Screen(window, table, texture, data),
-countDiscovered(font, "Discovered: 0 / 246"),
+countDiscovered(font, "Discovered: 0 / 250"),
 questionMark(font, "?"),
 plus(font, "+"),
 returnSign(glyphFont, L"\u21BB"),
@@ -25,7 +25,9 @@ infoTitle(font, "Gameplay info"),
 plusBtn(font, "-> Press (+) to add element"),
 retBtn(font, "-> Press arrow button to delete last element"),
 mainBtn(font, "-> Press alchemy bottle to return to Main Menu"),
-mergeElem(font, "***drag elements in order to merge them together***"){
+mergeElem(font, "***drag elements in order to merge them together***"),
+addTitle(font, "Add new element"),
+arrow(glyphFont, L"\u21BB"){
     //setam fonturile
     if(!font.openFromFile("assets/fonts/Type Machine.ttf")){
         throw std::runtime_error("Failed to load font\n");
@@ -70,8 +72,8 @@ void GamePlay::render(){
     this->data.drawAll(this->window);
 
     std::string currentDiscovered = "";
-    currentDiscovered = "Discovered: " + std::to_string(this->nrDiscovered);
-    currentDiscovered = currentDiscovered +  " / 246";  
+    currentDiscovered = "Discovered: " + std::to_string(this->data.discovered.size());
+    currentDiscovered = currentDiscovered +  " / 250";  
     this->countDiscovered.setString(currentDiscovered);
     initText(this->countDiscovered, 28, 2, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 325, 50);
     this->window.draw(this->countDiscovered);
@@ -131,7 +133,7 @@ void GamePlay::render(){
 
     initText(this->mainBtn, 20, 2, sf::Text::Regular, sf::Color::Black, sf::Color::Black, 0.2, pozx + 50, pozy + 175);
 
-    initText(this->mergeElem, 20, 2, sf::Text::Regular, sf::Color::Black, sf::Color::Black, 0.2, pozx + 50, pozy + 375);
+    initText(this->mergeElem, 20, 2, sf::Text::Regular, sf::Color::Black, sf::Color::Black, 0.2, pozx + 50, pozy + 250);
 
     if(this->showInfoBox){
         this->window.draw(this->infoRect);
@@ -140,6 +142,81 @@ void GamePlay::render(){
         this->window.draw(this->retBtn);
         this->window.draw(this->mainBtn);
         this->window.draw(this->mergeElem);
+    }
+
+    this->addRect.setOutlineColor(sf::Color::Black);
+    this->addRect.setOutlineThickness(0.9);
+    this->addRect.setFillColor(sf::Color(0, 255, 0, 180));
+
+    initText(this->addTitle, 38, 2, sf::Text::Italic, sf::Color::Black, sf::Color::Black, 0.2, 300, 50);
+
+    if(this->showAddBox){
+        //desenam elementele ecranului Add Elements
+        this->window.draw(this->addRect);
+        this->window.draw(this->addTitle);
+
+        //copiem discovered elems intr-un vector pentru a itera prin ele
+        std::vector<std::string> elems(
+            this->data.discovered.begin(),
+            this->data.discovered.end());
+
+        //apoi pentru fiecare element de afisat ii calculam linia si coloana pe ecran
+        for(int i = 0; i < elems.size(); i++){
+            int row = i / this->popupCols;
+            int col = i % this->popupCols;
+
+            float startX =  (window.getSize().x 
+                             - popupCols * cellSize 
+                             - (popupCols-1)*cellPadding) * 0.5f;
+            float startY =  (window.getSize().y * 0.2f);
+
+            sf::Vector2f cellPos = {
+                startX + col*(cellSize+cellPadding),
+                startY + row*(cellSize+cellPadding)
+            };
+
+            sf::RectangleShape box({cellSize, cellSize});
+            box.setPosition(cellPos);
+            box.setFillColor(sf::Color(0, 0, 0, 180));
+            box.setOutlineColor(sf::Color::Black);
+            box.setOutlineThickness(2.f);
+            this->window.draw(box);
+
+            const sf::Texture& tex = texture.load(elems[i], "assets/icons/" + elems[i] + ".png");
+            sf::Sprite icon(tex);
+
+            float iconMaxW = cellSize * 0.6f;
+            float iconMaxH = cellSize * 0.6f;
+            auto ts = tex.getSize();
+            float scale = std::min(iconMaxW/ts.x, iconMaxH/ts.y);
+            icon.setScale({scale, scale});
+
+            auto iconBounds = icon.getGlobalBounds();
+            icon.setPosition({
+                cellPos.x + (cellSize - iconBounds.size.x) * 0.5f,
+                cellPos.y 
+            });
+
+            this->window.draw(icon);
+
+            sf::Text label(font, elems[i]);
+            int posLabelx = icon.getPosition().x - 5;
+            int posLabely = icon.getPosition().y + cellSize / 2 + 13;
+            this->initText(label, 14, 2, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, posLabelx, posLabely);
+
+            this->window.draw(label);
+        }
+
+        this->btn.setSize({75.f, 75.f});
+        this->btn.setOutlineColor(sf::Color::Black);
+        this->btn.setOutlineThickness(2);
+        this->btn.setFillColor(sf::Color(0, 0, 0, 180));
+        this->btn.setPosition({50.f, 40.f});
+        this->window.draw(this->btn);
+
+        initText(this->arrow, 38, 0, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 1, 75, 50);
+        this->window.draw(this->arrow);
+
     }
 
     this->window.display();
@@ -166,11 +243,49 @@ void GamePlay::onMousePressed(const sf::Event::MouseButtonPressed& ev, std::uniq
     
     sf::Vector2f worldPos = this->window.mapPixelToCoords(ev.position);
 
-    if(this->showInfoBox)
-    {
+    if(this->showInfoBox){
         if (!this->infoRect.getGlobalBounds().contains(worldPos)) {
             this->showInfoBox = false;
         }
+    }
+
+    if(this->showAddBox){
+        if(this->arrow.getGlobalBounds().contains(worldPos)){
+            this->showAddBox = false;
+        }
+
+        std::vector<std::string> elems(
+            this->data.discovered.begin(),
+            this->data.discovered.end());
+
+        for(int i = 0; i < elems.size(); i++){
+            int r = i / this->popupCols;
+            int c = i % this->popupCols;
+
+            float stX =  (window.getSize().x 
+                             - popupCols * cellSize 
+                             - (popupCols-1)*cellPadding) * 0.5f;
+            float stY =  (window.getSize().y * 0.2f);
+
+            sf::Vector2f cellPos = {
+                stX + c*(cellSize + cellPadding),
+                stY + r*(cellSize + cellPadding)
+            };
+
+            sf::FloatRect cellRect(cellPos, {cellSize,cellSize});
+
+            if(cellRect.contains(worldPos)){
+                std::string name = elems[i];
+                int  x = this->data.xDist(this->data.rng);
+                int  y = this->data.yDist(this->data.rng);
+
+                DisplayableElem added(this->table.getElemByName(elems[i]),
+                                     this->texture,
+                                    x,y);
+                this->data.addDiscovered(added);
+            }
+        }
+
     }
 
     for(auto& [name, tex] : this->data.updatedElemOnTable){
@@ -184,8 +299,8 @@ void GamePlay::onMousePressed(const sf::Event::MouseButtonPressed& ev, std::uniq
         }
     }
 
+    auto ws = this->window.getSize();
     if(this->gameInfo.getGlobalBounds().contains(worldPos)){
-        auto ws = this->window.getSize();
         auto rs = this->infoRect.getSize();
         this->infoRect.setPosition({
              (ws.x - rs.x) / 2.f,
@@ -195,15 +310,13 @@ void GamePlay::onMousePressed(const sf::Event::MouseButtonPressed& ev, std::uniq
         this->showInfoBox = true;
     }
 
+    if(this->addElem.getGlobalBounds().contains(worldPos)){
+        this->addRect.setSize(sf::Vector2f(this->window.getSize()));
+        this->showAddBox = true;
+    }
+
     if(this->bottleSprite.getGlobalBounds().contains(worldPos)){
          try{
-        //     changeScreen(std::make_unique<MainMenu>(
-        //         this->window,
-        //         this->table,
-        //         this->texture,
-        //         this->data,
-        //         [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
-        //     ));
             next = std::make_unique<MainMenu>(window, table, texture, data);
             std::cout << "Successfully returned to main menu !!!" << '\n';
             return;
@@ -258,8 +371,10 @@ void GamePlay::update(){
     while(!this->toCombine.empty()){
         this->toCombine.pop();
     }
+
     int size_t = this->data.updatedElemOnTable.size();
     map<string, vector<DisplayableElem>>::iterator it;
+
     for(it = this->data.updatedElemOnTable.begin(); it != this->data.updatedElemOnTable.end(); ++it){
          map<string, vector<DisplayableElem>>::iterator it2 = std::next(it);
          auto& firstElemInst = it->second;
@@ -274,6 +389,7 @@ void GamePlay::update(){
     //combinam elementele
     //parcurgem lista de coliziuni
     while(!this->toCombine.empty()){
+
         DisplayableElem* A = this->toCombine.front().first;
         DisplayableElem* B = this->toCombine.front().second;
 
@@ -317,6 +433,7 @@ void GamePlay::update(){
 void GamePlay::checkColisions(vector<DisplayableElem>& v1,
      vector<DisplayableElem>& v2, queue<pair<DisplayableElem*, 
      DisplayableElem*>>& q){
+
         for(int i = 0; i < v1.size(); i++){
             auto boundsA = v1[i].sprite.getGlobalBounds();
 
@@ -324,6 +441,7 @@ void GamePlay::checkColisions(vector<DisplayableElem>& v1,
                 auto boundsB = v2[j].sprite.getGlobalBounds();
 
                 if(boundsA.findIntersection(boundsB)){
+
                     //daca doua elemente e intersecteaza si formeaza o reteta
                     //atunci adaugam perechea in coada de combinari
                     if(this->table.canCombine(*(v1[i].elem), *(v2[j].elem)))

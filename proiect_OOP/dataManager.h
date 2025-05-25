@@ -33,17 +33,16 @@ class DataManager{
     void eraseElem(DisplayableElem* del);
 
 private:
+    AlchemyTable& table;            
+    TextureManager& texture;
+    
+public:
+
     //membrii care ajuta cu pozitionarea random a elementelor pe tabla cand sunt adaugate
     std::mt19937   rng{std::random_device{}()};
     sf::IntRect tableArea;
     std::uniform_real_distribution<float> xDist{100.f, 800.f};
     std::uniform_real_distribution<float> yDist{100.f, 600.f};
-    
-
-    AlchemyTable& table;            
-    TextureManager& texture;
-    
-public:
 
     //numele tuturor elementelor gasite
     std::set<std::string> discovered; 

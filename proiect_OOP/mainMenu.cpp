@@ -134,13 +134,6 @@ void MainMenu::onMousePressed(const sf::Event::MouseButtonPressed& ev,
         std::cout << "Loading new game..." << '\n';
         // daca am apasat pe "Start new game" atunci incepe un nou joc si trecem pe Game window
         try{
-            // this->changeScreen(std::make_unique<GamePlay>(
-            //     this->window,
-            //     this->table,
-            //     this->texture,
-            //     this->data,
-            //     [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
-            // ));
             next = std::make_unique<GamePlay>(window, table, texture, data);
             std::cout << "Game window successfully created !!!" << '\n';
             return;
@@ -186,7 +179,7 @@ shape(radius), speed(speed){
     this->shape.setPosition({x, 600.f + radius*2});   
     this->shape.setFillColor(sf::Color::Black);
     this->shape.setOutlineColor(sf::Color(0,200,0,200));
-    this->shape.setOutlineThickness(0.8);
+    this->shape.setOutlineThickness(1);
 }
 
 void MainMenu::spawnBubble(){

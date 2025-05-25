@@ -19,15 +19,15 @@ DataManager::DataManager(AlchemyTable& table, TextureManager& texture)
 : table(table),
  texture(texture),
  rng({std::random_device{}()}),
- tableArea({100, 100}, {600, 400}){}
-//  xDist(
-//     tableArea.position.x,
-//     tableArea.position.x + tableArea.size.x - 75
-//   ),
-//  yDist(
-//     tableArea.position.y,
-//     tableArea.position.y + tableArea.size.y - 75
-//   )
+ tableArea({100, 100}, {600, 400}),
+ xDist(
+    tableArea.position.x,
+    tableArea.position.x + tableArea.size.x - 75
+  ),
+ yDist(
+    tableArea.position.y,
+    tableArea.position.y + tableArea.size.y - 75
+  ){}
 
 void DataManager::initBaseElements() {
     static const std::vector<std::string> base = {"Fire","Water","Earth","Air"};
@@ -71,13 +71,27 @@ void DataManager::initBaseElements() {
 
 void DataManager::addDiscovered(DisplayableElem display) {
     std::string name = display.elem->getName();
-   
-    try{
-        this->discovered.insert(name);  
-        this->updatedElemOnTable[name].emplace_back(display);  
+
+    //verificam intai daca elementul este nou descoperit sau exista deja pe tabla
+    if(this->discovered.find(name) != this->discovered.end()){
+        //daca elementul exista deja pe tabla doar adaugam o noua instanta a lui in updateElem
+        try{
+            this->updatedElemOnTable[name].emplace_back(display);
+        }
+        catch(std::exception& e){
+            std::cout << "couldn't add new instance of element on table" << e.what() << '\n';
+        }
     }
-    catch(std::exception& e){
-        std::cout << "couldn't update element table" << e.what() << '\n';
+    else{
+        try{
+            //daca elementul nu exista deja pe tabla il vom adauga si in ecranul "Add element"
+            this->discovered.insert(name);
+            this->updatedElemOnTable[name].emplace_back(display); 
+            
+        }
+        catch(std::exception& e){
+            std::cout << "couldn't add element to table" << e.what() << '\n';
+        }
     }
  
     tableMultipliers[name] += 1;
@@ -99,23 +113,7 @@ void DataManager::eraseElem(DisplayableElem* del){
       ),
       inst.end()
     );
-    // int pozx;
-    // int pozy;
-  
-    // auto pos = (*(del)).sprite.getPosition();
-    // pozx = pos.x;
-    // pozy = pos.y;
-    // for(auto it = updatedElemOnTable[name].begin(); it != updatedElemOnTable[name].end(); ++it){
-    //     //cautam in aparitiile elementului pe tabla
-    //     sf::Vector2f posErase = {static_cast<float>(pozx), static_cast<float>(pozy)};
-
-    //     //cand am gasit elementul "name" la pozitia {pozx, pozy}
-    //     if(it->sprite.getPosition() == posErase){
-    //         updatedElemOnTable[name].erase(it);
-    //         return;
-    //     }
-
-    // }   
+   
 }
 
 void DataManager::drawAll(sf::RenderWindow& window){
@@ -128,7 +126,3 @@ void DataManager::drawAll(sf::RenderWindow& window){
     }
 
 }
-
-// void DataManager::updateElems(){
-
-// }

@@ -31,9 +31,10 @@ design patern
 
 - do not forget to do:
    dark and light theme
-   main menu button functionality (the little alchemy bottle)
+   main menu button functionality (the little alchemy bottle)*
+   name under every element icon
 - buttons on main game screen:
-   "?" = game info, how elements are combined, game logic 
+   "?" = game info, how elements are combined, game logic *
    "+" = add element, takes you to Add Element Window
    "<-" = deletes last element
 
