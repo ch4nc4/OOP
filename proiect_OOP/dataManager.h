@@ -32,11 +32,15 @@ class DataManager{
     //cand stergem un element de pe tabla
     void eraseElem(DisplayableElem* del);
 
+    void reset();
+
 private:
     AlchemyTable& table;            
     TextureManager& texture;
     
 public:
+
+    bool clickedNewGame = false;
 
     //membrii care ajuta cu pozitionarea random a elementelor pe tabla cand sunt adaugate
     std::mt19937   rng{std::random_device{}()};

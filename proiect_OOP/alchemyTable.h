@@ -27,7 +27,7 @@ class AlchemyTable{ // singleton //
         
                 void setType(bool newType);
 
-                Element verifEndElem();
+                bool verifEndElem();
 
                 Element operator+(const Element &other)const;
 
@@ -61,5 +61,7 @@ class AlchemyTable{ // singleton //
         bool canCombine(AlchemyTable::Element e1, AlchemyTable::Element e2)const;
 
         AlchemyTable::Element resElem(AlchemyTable::Element e1, AlchemyTable::Element e2)const;
+
+        bool getInitTable();
 };
 

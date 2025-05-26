@@ -19,7 +19,8 @@ add_executable(main main.cpp
                     gamePlay.cpp
                     textureManager.cpp
                     displayableElem.cpp
-                    dataManager.cpp)
+                    dataManager.cpp
+                    themeDefs.cpp)
 add_custom_command(TARGET main PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${CMAKE_SOURCE_DIR}/assets

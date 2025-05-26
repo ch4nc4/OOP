@@ -43,13 +43,6 @@ data(initTable, textureMng){
 
     //apoi setam currentScreen
     try{
-        // changeScreen(std::make_unique<MainMenu>(
-        //     this->window,
-        //     this->initTable,
-        //     this->textureMng,
-        //     this->data,
-        //     [this](std::unique_ptr<Screen> newScreen) { this->changeScreen(std::move(newScreen));}
-        // ));
         this->currentScreen = std::make_unique<MainMenu>(window, initTable, textureMng, data);
     }
     catch(std::exception& e){
@@ -58,6 +51,21 @@ data(initTable, textureMng){
     }
 
 };
+
+//destructorul
+Game::~Game(){
+    //daca muzica nu a fost oprita o oprim
+    if(this->gameSoundtrack.getStatus() == sf::Music::Status::Playing){
+        this->gameSoundtrack.stop();
+    }
+
+    //daca window nu s-a inchis il inchidem
+    if(this->window.isOpen()){
+        window.close();
+    }
+
+    std::cout << "[Game] Destructor: cleaned up music and window";
+}
 
 //functia de rulare a jocului
 void Game::run(){
@@ -78,7 +86,3 @@ void Game::run(){
     }
 }
 
-//functia care face switch intre windows
-// void Game::changeScreen(std::unique_ptr<Screen> newScreen){
-//     currentScreen = std::move(newScreen);
-// }

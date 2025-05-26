@@ -77,28 +77,28 @@ void AlchemyTable::Element::setType(bool newType){
     endElement = newType;
 }
 
-AlchemyTable::Element AlchemyTable::Element::verifEndElem(){
+bool AlchemyTable::Element::verifEndElem(){
     map<pair<Element, Element>, Element>::iterator it;
     bool foundRecipe = false;
     for(it = recipes.begin(); it != recipes.end(); it++){
-        if(it->first.first.getName() == this->getName())
-            foundRecipe = true;
+        if(it->first.first.getName() ==  this->getName())
+            return true;
     }
 
-    if(!foundRecipe)
-        this->endElement = true;
-    
-    return *this;
+    return false;
 }
 
 AlchemyTable::Element AlchemyTable::Element::operator+(const Element &other)const{
-    if(recipes.count({*this, other}) > 0){
-        return recipes[{*this, other}];
-    }
+    // if(recipes.count({*this, other}) > 0){
+    //     return recipes[{*this, other}];
+    // }
 
-    else{
-        throw invalid_argument("These elements have no recipe asociated!!");
-    }
+    // else{
+    //     throw invalid_argument("These elements have no recipe asociated!!");
+    // }
+
+    return AlchemyTable::getInstance().resElem(*this, other);
+
 }
 
 bool AlchemyTable::Element::operator<(const Element &other)const{
@@ -183,6 +183,10 @@ AlchemyTable::Element AlchemyTable::resElem(AlchemyTable::Element e1, AlchemyTab
     else
         return this->recipes[{e1, e2}];
     
+}
+
+bool AlchemyTable::getInitTable(){
+    return initTable;
 }
 
 

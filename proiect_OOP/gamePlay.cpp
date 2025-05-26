@@ -12,9 +12,10 @@
 #include "displayableElem.h"
 #include "mainMenu.h"
 
-
+/*
 //constructorul
-GamePlay::GamePlay(sf::RenderWindow& window, AlchemyTable& table, TextureManager& texture, DataManager& data): 
+template<typename TTheme>
+GamePlay<TTheme>::GamePlay(sf::RenderWindow& window, AlchemyTable& table, TextureManager& texture, DataManager& data): 
 Screen(window, table, texture, data),
 countDiscovered(font, "Discovered: 0 / 250"),
 questionMark(font, "?"),
@@ -54,28 +55,30 @@ arrow(glyphFont, L"\u21BB"){
     }
 
     //adaugam primele elemente pe tabla: Fire, Water, Earth, Air
-    this->data.initBaseElements();
+    if(this->data.clickedNewGame)
+        this->data.initBaseElements();
 
 }
 
 //destructorul
-
-GamePlay::~GamePlay(){
+template<typename TTheme>
+GamePlay<TTheme>::~GamePlay(){
     delete this->dragged;
 }
 
 // -- adaugam elementele vizuale ale Game Play --
-
-void GamePlay::render(){
-    this->window.clear(sf::Color::Black);
+template<typename TTheme>
+void GamePlay<TTheme>::render(){
+    this->window.clear(TTheme::Background);
 
     this->data.drawAll(this->window);
+    styleAllButtons<TTheme>(this->allBtns);
 
     std::string currentDiscovered = "";
     currentDiscovered = "Discovered: " + std::to_string(this->data.discovered.size());
     currentDiscovered = currentDiscovered +  " / 250";  
     this->countDiscovered.setString(currentDiscovered);
-    initText(this->countDiscovered, 28, 2, sf::Text::Regular, sf::Color::Green, sf::Color::Black, 0.2, 325, 50);
+    initText(this->countDiscovered, 28, 2, sf::Text::Regular, TTheme::Text, sf::Color::Black, 0.2, 325, 50);
     this->window.draw(this->countDiscovered);
 
 
@@ -87,9 +90,9 @@ void GamePlay::render(){
     this->window.draw(bottleSprite);
 
     this->gameInfo.setSize({75.f, 75.f});
-    this->gameInfo.setOutlineColor(sf::Color::Green);
-    this->gameInfo.setOutlineThickness(0.9);
-    this->gameInfo.setFillColor(sf::Color::Black);
+    // this->gameInfo.setOutlineColor(sf::Color::Green);
+    // this->gameInfo.setOutlineThickness(0.9);
+    // this->gameInfo.setFillColor(sf::Color::Black);
     this->gameInfo.setPosition({140.f, 650.f});
     this->window.draw(this->gameInfo);
 
@@ -98,9 +101,9 @@ void GamePlay::render(){
     this->window.draw(this->questionMark);
 
     this->addElem.setSize({75.f, 75.f});
-    this->addElem.setOutlineColor(sf::Color::Green);
-    this->addElem.setOutlineThickness(0.9);
-    this->addElem.setFillColor(sf::Color::Black);
+    // this->addElem.setOutlineColor(sf::Color::Green);
+    // this->addElem.setOutlineThickness(0.9);
+    // this->addElem.setFillColor(sf::Color::Black);
     this->addElem.setPosition({460.f, 650.f});
     this->window.draw(this->addElem);
 
@@ -108,9 +111,9 @@ void GamePlay::render(){
     this->window.draw(this->plus);
 
     this->deleteLastElem.setSize({75.f, 75.f});
-    this->deleteLastElem.setOutlineColor(sf::Color::Green);
-    this->deleteLastElem.setOutlineThickness(0.9);
-    this->deleteLastElem.setFillColor(sf::Color::Black);
+    // this->deleteLastElem.setOutlineColor(sf::Color::Green);
+    // this->deleteLastElem.setOutlineThickness(0.9);
+    // this->deleteLastElem.setFillColor(sf::Color::Black);
     this->deleteLastElem.setPosition({780.f, 650.f});
     this->window.draw(this->deleteLastElem);
 
@@ -226,18 +229,20 @@ void GamePlay::render(){
 
 
 // -- functii pentru event handling -- 
-
-void GamePlay::onClose(const sf::Event::Closed& ev){
+template<typename TTheme>
+void GamePlay<TTheme>::onClose(const sf::Event::Closed& ev){
     this->window.close();
 }
 
-void GamePlay::onKeyPressed(const sf::Event::KeyPressed& ev){
+template<typename TTheme>
+void GamePlay<TTheme>::onKeyPressed(const sf::Event::KeyPressed& ev){
     if(ev.scancode == sf::Keyboard::Scancode::Escape){
         this->window.close();
     }
 }
 
-void GamePlay::onMousePressed(const sf::Event::MouseButtonPressed& ev, std::unique_ptr<Screen>& next){
+template<typename TTheme>
+void GamePlay<TTheme>::onMousePressed(const sf::Event::MouseButtonPressed& ev, std::unique_ptr<Screen>& next){
     if(ev.button != sf::Mouse::Button::Left)
         return;
     
@@ -330,7 +335,8 @@ void GamePlay::onMousePressed(const sf::Event::MouseButtonPressed& ev, std::uniq
     
 }
 
-void GamePlay::onMouseMoved(const sf::Event::MouseMoved& ev){
+template<typename TTheme>
+void GamePlay<TTheme>::onMouseMoved(const sf::Event::MouseMoved& ev){
     if(!this->dragging || !this->dragged){
         return;
     }
@@ -338,14 +344,16 @@ void GamePlay::onMouseMoved(const sf::Event::MouseMoved& ev){
     this->dragged->sprite.setPosition(worldPos - this->dragOffset);
 }
 
-void GamePlay::onMouseReleased(const sf::Event::MouseButtonReleased& ev){
+template<typename TTheme>
+void GamePlay<TTheme>::onMouseReleased(const sf::Event::MouseButtonReleased& ev){
     if(ev.button == sf::Mouse::Button::Left && this->dragging){
         this->dragging = false;
         dragged = nullptr;
     }
 }
 
-std::unique_ptr<Screen> GamePlay::handleEvents(){
+template<typename TTheme>
+std::unique_ptr<Screen> GamePlay<TTheme>::handleEvents(){
     std::unique_ptr<Screen> next = nullptr;
 
     this->window.handleEvents(
@@ -362,7 +370,8 @@ std::unique_ptr<Screen> GamePlay::handleEvents(){
 
 // -- sfarsit functii pentru event handling --
 
-void GamePlay::update(){
+template<typename TTheme>
+void GamePlay<TTheme>::update(){
     //in update vom detecta constant coliziunile intre elemente
     //pentru fiecare element din tabla verificam coliziuni intre instantele lui
     //si instantele urmatoarelor elemente de pe tabla
@@ -398,20 +407,21 @@ void GamePlay::update(){
         //in orice caz retinem rezultatul retetei
         std::string recipeRes;
         try{
-            recipeRes = this->table.resElem(*((*(A)).elem), *((*(B)).elem)).getName();
+            recipeRes = (*((*(A)).elem) + *((*(B)).elem)).getName(); //folosim operatorul + pe elemente
+            std::cout << recipeRes << '\n';
+            // recipeRes = this->table.resElem(*((*(A)).elem), *((*(B)).elem)).getName();
         }
         catch(std::exception& e){
             cout << e.what() << '\n';
         }
 
-        cout << (*(A)).elem->getName() << " + " << (*(B)).elem->getName() << " = " << recipeRes << '\n';
         //dupa ce am gasit rezultatul retetei
         //eliminam cele doua elemente combinate de pe tabla
-        this->data.eraseElem(A);
-        this->data.eraseElem(B);
-
         //si adaugam noul element la pozitia unde a avut loc coliziunea
         sf::Vector2f pos = ((*(A)).sprite.getPosition() + (*(B)).sprite.getPosition()) / 2.f;
+
+        this->data.eraseElem(A);
+        this->data.eraseElem(B);
         try{
             DisplayableElem newElem(
                 this->table.getElemByName(recipeRes),
@@ -430,7 +440,8 @@ void GamePlay::update(){
     
 }
 
-void GamePlay::checkColisions(vector<DisplayableElem>& v1,
+template<typename TTheme>
+void GamePlay<TTheme>::checkColisions(vector<DisplayableElem>& v1,
      vector<DisplayableElem>& v2, queue<pair<DisplayableElem*, 
      DisplayableElem*>>& q){
 
@@ -444,8 +455,12 @@ void GamePlay::checkColisions(vector<DisplayableElem>& v1,
 
                     //daca doua elemente e intersecteaza si formeaza o reteta
                     //atunci adaugam perechea in coada de combinari
-                    if(this->table.canCombine(*(v1[i].elem), *(v2[j].elem)))
+                    if(this->table.canCombine(*(v1[i].elem), *(v2[j].elem))){
                         q.push({&v1[i], &v2[j]});
+
+                        std:string res = (*(v1[i].elem) + *(v2[j].elem)).getName();
+                        std::cout << v1[i].elem->getName() << " + " << v2[j].elem->getName() << " = " << res << '\n';
+                    }
                     else if(this->table.canCombine(*(v2[j].elem), *(v1[i].elem)))
                         q.push({&v2[j], &v1[i]});
                 }
@@ -457,7 +472,8 @@ void GamePlay::checkColisions(vector<DisplayableElem>& v1,
 
 
 // personalizarea textului care apare pe screen
-void GamePlay::initText(sf::Text &text, const int charSize, const float lineSpacing, const std::uint32_t style, const sf::Color fillColor,
+template<typename TTheme>
+void GamePlay<TTheme>::initText(sf::Text &text, const int charSize, const float lineSpacing, const std::uint32_t style, const sf::Color fillColor,
     const sf::Color outlineClr, const float thickness, float pozx, float pozy){
     text.setCharacterSize(charSize);
     text.setLineSpacing(lineSpacing);
@@ -467,5 +483,5 @@ void GamePlay::initText(sf::Text &text, const int charSize, const float lineSpac
     text.setOutlineThickness(thickness);
     text.setPosition({pozx, pozy});
 }
-
+*/
 

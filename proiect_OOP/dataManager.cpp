@@ -126,3 +126,9 @@ void DataManager::drawAll(sf::RenderWindow& window){
     }
 
 }
+
+void DataManager::reset() {
+        discovered.clear();
+        updatedElemOnTable.clear();
+        tableMultipliers.clear();
+}

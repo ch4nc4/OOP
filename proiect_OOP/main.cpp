@@ -30,9 +30,8 @@ design patern
 -> asa nu pierdem nimic cand dam switch intre windows 
 
 - do not forget to do:
-   dark and light theme
+   dark and light theme *
    main menu button functionality (the little alchemy bottle)*
-   name under every element icon
 - buttons on main game screen:
    "?" = game info, how elements are combined, game logic *
    "+" = add element, takes you to Add Element Window
@@ -42,11 +41,17 @@ design patern
                   pentru ca este singleton, singurul ob. de acest tip este creat in Screen
                   si evident ramane valabil fiecarui window al jocului * 
 
+- teorie de adaugat:
+   - foloseste operatorii overloaded: debug print (elements) *
+   - template (metoda template, functie externa template) *
+   - destructori (avem 2 :(( ) *
+
 
 */
 
-// #define SFML_STATIC
+// #define SFML_STATIC_
 #include "game.h"
+#include "alchemyTable.h"
 #include<iostream>
 #include<string>
 #include<vector>
@@ -60,7 +65,7 @@ design patern
 using namespace std;
 
 
-int main()
+int main()  
 {
    Game game;
    game.run();

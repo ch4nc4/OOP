@@ -14,8 +14,8 @@
 class Game{
 public:
     Game();
+    ~Game();
     void run();
-    // void changeScreen(std::unique_ptr<Screen> newScreen);
 
 private:
     sf::RenderWindow window;

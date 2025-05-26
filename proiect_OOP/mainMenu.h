@@ -69,6 +69,8 @@ class MainMenu: public Screen{
         sf::RectangleShape setThemeBtn;
         sf::Text gameTheme;
         sf::Font font;
+        sf::RectangleShape resume;
+        sf::Text resumeGame;
 
         //la click pe "Set game theme" apar 2 butoane
         sf::RectangleShape setDarkTheme;
@@ -77,4 +79,11 @@ class MainMenu: public Screen{
         sf::Text lightTheme;
         //pentru ca acele butoane sa fie afisate, trebuie sa fim siguri ca am dat click pe "Set game theme"
         bool buttonClicked = false;
+
+        //variabila care retine daca am apasat Dark Theme
+        bool clickedDark = false;
+
+        //variabila care retine daca am apasat Light Theme
+        bool clickedLight = false;
+
 };
